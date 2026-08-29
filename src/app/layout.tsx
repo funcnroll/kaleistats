@@ -10,7 +10,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en">
       <body className="text-stone-200 bg-neutral-900">
-        <main>{children}</main>
+        <main>
+          <div className="mx-auto max-w-md px-6 py-12">{children}</div>
+        </main>
       </body>
     </html>
   );

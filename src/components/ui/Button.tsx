@@ -11,7 +11,8 @@ export default function Button({
   className = "",
   children,
 }: ButtonProps) {
-  const base = "rounded-md px-5 py-2 text-sm transition-colors cursor-pointer";
+  const base =
+    "rounded-md px-5 py-2 text-sm transition-colors cursor-pointer w-full";
   const variants = {
     primary: "border border-neutral-700 text-neutral-200 hover:bg-neutral-900",
     secondary: "text-neutral-400 hover:text-neutral-200",
