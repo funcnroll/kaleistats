@@ -33,7 +33,7 @@ function Page() {
   }
 
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={onSubmit} className="mb-8">
       <H1H2Spacing>
         <H1>What do you think of {config.adminName}?</H1>
         <h2>
