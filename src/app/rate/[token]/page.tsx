@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import H1 from "@/components/ui/H1";
 import { useEffect, useState } from "react";
 import ErrMsg from "@/components/ui/ErrMsg";
+import H1H2Spacing from "@/components/layout/H1H2Spacing";
 
 function Page() {
   const router = useRouter();
@@ -32,14 +33,14 @@ function Page() {
   }
 
   return (
-    <form onSubmit={onSubmit} className="mx-auto max-w-md px-6 py-12">
-      <div className="space-y-4 mb-6">
+    <form onSubmit={onSubmit} className="mb-8">
+      <H1H2Spacing>
         <H1>What do you think of {config.adminName}?</H1>
         <h2>
           Please be honest and rate {config.adminName} on a scale of 1-10 for
           each trait below.
         </h2>
-      </div>
+      </H1H2Spacing>
 
       <ul className="space-y-4 mb-8">
         {config.traits.map((trait, i) => (
@@ -49,9 +50,7 @@ function Page() {
         ))}
       </ul>
 
-      <Button type="submit" className="w-full">
-        Submit
-      </Button>
+      <Button type="submit">Submit</Button>
       {errorMsg && <ErrMsg>{errorMsg}</ErrMsg>}
     </form>
   );
