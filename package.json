@@ -8,9 +8,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "initDb": "node src/db/index.js"
+    "initDb": "node src/db/index.js && npx auth@latest migrate --yes"
   },
   "dependencies": {
+    "better-auth": "^1.7.2",
     "better-sqlite3": "^13.0.3",
     "next": "16.3.2",
     "react": "19.2.8",
@@ -19,6 +20,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@types/better-sqlite3": "^9.6.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
