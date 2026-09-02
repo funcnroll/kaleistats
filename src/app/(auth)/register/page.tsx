@@ -5,15 +5,16 @@ import Button from "@/components/ui/Button";
 import H1 from "@/components/ui/H1";
 import Input from "@/components/ui/Input";
 import { authClient } from "@/lib/auth-client";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 function Page() {
+  const router = useRouter();
+
   async function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
-    const name = formData.get("name") as string;
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
 
@@ -26,7 +27,7 @@ function Page() {
       },
       {
         onSuccess: (ctx) => {
-          redirect("/dashboard");
+          router.push("/dashboard");
         },
         onError: (ctx) => {
           alert(ctx.error.message);

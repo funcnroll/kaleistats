@@ -4,8 +4,7 @@ import { createAuthClient } from "better-auth/react";
 import { Spinner } from "../ui/Spinner";
 import SignOutButton from "../ui/SignOutButton";
 import Link from "next/link";
-
-const { useSession } = createAuthClient();
+import { useSession } from "@/lib/auth-client";
 
 function AuthNav() {
   const { data: session, isPending, error } = useSession();

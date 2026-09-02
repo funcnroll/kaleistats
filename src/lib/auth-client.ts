@@ -9,3 +9,5 @@ export const authClient = createAuthClient({
 
   plugins: [nextCookies()],
 });
+
+export const { useSession, signIn, signUp, signOut } = authClient;

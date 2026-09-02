@@ -4,9 +4,11 @@ import Button from "@/components/ui/Button";
 import H1 from "@/components/ui/H1";
 import Input from "@/components/ui/Input";
 import { authClient } from "@/lib/auth-client";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 function Page() {
+  const router = useRouter();
+
   async function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
 
@@ -21,7 +23,7 @@ function Page() {
       },
       {
         onSuccess: (ctx) => {
-          redirect("/dashboard");
+          router.push("/dashboard");
         },
         onError: (ctx) => {
           alert(ctx.error.message);
