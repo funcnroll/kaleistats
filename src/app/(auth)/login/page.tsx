@@ -39,7 +39,7 @@ function Page() {
       <form onSubmit={handleSubmit} className="space-y-4">
         <Input type="email" name="email" placeholder="Email" required={true} />
         <Input
-          type="text"
+          type="password"
           placeholder="Password"
           required={true}
           name="password"
