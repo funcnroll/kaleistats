@@ -6,10 +6,13 @@ import H1 from "@/components/ui/H1";
 import Input from "@/components/ui/Input";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
 
 function Page() {
   const router = useRouter();
+
+  const [password, setPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
 
   async function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -17,6 +20,8 @@ function Page() {
     const formData = new FormData(e.currentTarget);
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
+
+    if (password !== confirmPassword) return;
 
     const { data, error } = await authClient.signUp.email(
       {
@@ -46,9 +51,18 @@ function Page() {
       <form onSubmit={handleSubmit} className="space-y-4">
         <Input name="email" type="email" placeholder="Email" required={true} />
         <Input
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
           name="password"
           type="password"
           placeholder="Password"
+          required={true}
+        />
+        <Input
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          type="password"
+          placeholder="Confirm Password"
           required={true}
         />
 
