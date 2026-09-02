@@ -1,11 +1,9 @@
-"use client";
-
 import H1 from "@/components/ui/H1";
 import { config } from "../../../../config";
 import H1H2Spacing from "@/components/layout/H1H2Spacing";
 import StatsRadarChart from "@/components/charts/StatsRadarChart";
 
-function Page() {
+async function Page() {
   // Placeholder data for now works
   const data = config.traits.map((trait) => {
     return {

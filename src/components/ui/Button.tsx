@@ -10,6 +10,7 @@ export default function Button({
   variant = "primary",
   className = "",
   children,
+  ...rest
 }: ButtonProps) {
   const base =
     "rounded-md px-5 py-2 text-sm transition-colors cursor-pointer w-full";
@@ -19,7 +20,7 @@ export default function Button({
   };
 
   return (
-    <button className={`${base} ${variants[variant]} ${className}`}>
+    <button className={`${base} ${variants[variant]} ${className}`} {...rest}>
       {children}
     </button>
   );

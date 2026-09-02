@@ -4,11 +4,41 @@ import H1H2Spacing from "@/components/layout/H1H2Spacing";
 import Button from "@/components/ui/Button";
 import H1 from "@/components/ui/H1";
 import Input from "@/components/ui/Input";
-import React from "react";
+import { authClient } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
 
 function Page() {
-  function onSubmit(e: React.SubmitEvent<HTMLFormElement>) {
+  const router = useRouter();
+
+  const [password, setPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
+
+  async function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+
+    if (password !== confirmPassword) return;
+
+    const { data, error } = await authClient.signUp.email(
+      {
+        email,
+        password,
+        // Name is not checked in the API
+        name: "",
+      },
+      {
+        onSuccess: (ctx) => {
+          router.push("/dashboard");
+        },
+        onError: (ctx) => {
+          alert(ctx.error.message);
+        },
+      },
+    );
   }
 
   return (
@@ -18,10 +48,23 @@ function Page() {
         <h2>Sign up to get started</h2>
       </H1H2Spacing>
 
-      <form onSubmit={onSubmit} className="space-y-4">
-        <Input type="text" placeholder="Username" />
-        <Input type="text" placeholder="Password" />
-        <Input type="text" placeholder="Confirm Password" />
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <Input name="email" type="email" placeholder="Email" required={true} />
+        <Input
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          name="password"
+          type="password"
+          placeholder="Password"
+          required={true}
+        />
+        <Input
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          type="password"
+          placeholder="Confirm Password"
+          required={true}
+        />
 
         <Button type="submit">Submit</Button>
       </form>
