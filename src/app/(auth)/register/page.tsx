@@ -4,11 +4,34 @@ import H1H2Spacing from "@/components/layout/H1H2Spacing";
 import Button from "@/components/ui/Button";
 import H1 from "@/components/ui/H1";
 import Input from "@/components/ui/Input";
+import { authClient } from "@/lib/auth-client";
+import { redirect } from "next/navigation";
 import React from "react";
 
 function Page() {
-  function onSubmit(e: React.SubmitEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+    const name = formData.get("name") as string;
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+
+    const { data, error } = await authClient.signUp.email(
+      {
+        email,
+        password,
+        name,
+      },
+      {
+        onSuccess: (ctx) => {
+          redirect("/dashboard");
+        },
+        onError: (ctx) => {
+          alert(ctx.error.message);
+        },
+      },
+    );
   }
 
   return (
@@ -18,10 +41,15 @@ function Page() {
         <h2>Sign up to get started</h2>
       </H1H2Spacing>
 
-      <form onSubmit={onSubmit} className="space-y-4">
-        <Input type="text" placeholder="Username" />
-        <Input type="text" placeholder="Password" />
-        <Input type="text" placeholder="Confirm Password" />
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <Input name="name" type="text" placeholder="name" required={true} />
+        <Input name="email" type="email" placeholder="Email" required={true} />
+        <Input
+          name="password"
+          type="password"
+          placeholder="Password"
+          required={true}
+        />
 
         <Button type="submit">Submit</Button>
       </form>
