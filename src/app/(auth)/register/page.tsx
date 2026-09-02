@@ -21,7 +21,8 @@ function Page() {
       {
         email,
         password,
-        name,
+        // Name is not checked in the API
+        name: "",
       },
       {
         onSuccess: (ctx) => {
@@ -42,7 +43,6 @@ function Page() {
       </H1H2Spacing>
 
       <form onSubmit={handleSubmit} className="space-y-4">
-        <Input name="name" type="text" placeholder="name" required={true} />
         <Input name="email" type="email" placeholder="Email" required={true} />
         <Input
           name="password"

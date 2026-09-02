@@ -3,11 +3,19 @@ type Prop = {
   placeholder: string;
   name: string;
   required: boolean;
+  hidden?: boolean;
 };
 
-function Input({ type = "", placeholder = "", name, required = false }: Prop) {
+function Input({
+  type = "",
+  placeholder = "",
+  name,
+  required = false,
+  hidden = false,
+}: Prop) {
   return (
     <input
+      hidden={hidden}
       required={required}
       type={type}
       placeholder={placeholder}
