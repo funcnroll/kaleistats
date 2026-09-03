@@ -14,7 +14,6 @@ function GenerateRatingLinks() {
     const value = Number(numLinks);
     if (!numLinks || value <= 0) return;
 
-    // Redundant but it makes TS happy
     const tokens = generateTokens(value);
 
     console.log(tokens);
