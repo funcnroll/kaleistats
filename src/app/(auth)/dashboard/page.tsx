@@ -6,8 +6,11 @@ import H1H2Spacing from "@/components/layout/H1H2Spacing";
 import StatsRadarChart from "@/components/charts/StatsRadarChart";
 import GenerateRatingLinks from "@/components/forms/GenerateRatingLinks";
 import { useState } from "react";
+import Modal from "@/components/ui/Modal";
 
 function Page() {
+  const [tokensGenerated, setTokensGenerated] = useState<boolean>(false);
+
   // Placeholder data for now works
   const data = configClient.traits.map((trait) => {
     return {
@@ -30,7 +33,13 @@ function Page() {
           <h2>Generate links here to send to people!</h2>
         </H1H2Spacing>
 
-        <GenerateRatingLinks />
+        <Modal
+          isOpen={tokensGenerated}
+          onClose={() => setTokensGenerated(false)}
+        >
+          Placeholder
+        </Modal>
+        <GenerateRatingLinks setTokensGenerated={setTokensGenerated} />
       </div>
     </div>
   );

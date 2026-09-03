@@ -2,10 +2,13 @@
 import { useState } from "react";
 import Button from "../ui/Button";
 import Input from "../ui/Input";
-import { number } from "better-auth";
 import { generateTokens } from "@/lib/generateTokens";
 
-function GenerateRatingLinks() {
+function GenerateRatingLinks({
+  setTokensGenerated,
+}: {
+  setTokensGenerated: (arg0: boolean) => void;
+}) {
   const [numLinks, setNumLinks] = useState("");
 
   function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
@@ -15,6 +18,7 @@ function GenerateRatingLinks() {
     if (!numLinks || value <= 0) return;
 
     const tokens = generateTokens(value);
+    setTokensGenerated(true);
 
     console.log(tokens);
   }
