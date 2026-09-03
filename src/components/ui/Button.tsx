@@ -13,7 +13,7 @@ export default function Button({
   ...rest
 }: ButtonProps) {
   const base =
-    "rounded-md px-5 py-2 text-sm transition-colors cursor-pointer w-full";
+    "rounded-md px-5 py-2 text-sm transition-all cursor-pointer w-full duration-300";
   const variants = {
     primary: "border border-neutral-700 text-neutral-200 hover:bg-neutral-900",
     secondary: "text-neutral-400 hover:text-neutral-200",
