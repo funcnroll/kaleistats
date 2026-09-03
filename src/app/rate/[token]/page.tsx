@@ -1,6 +1,6 @@
 "use client";
 import RatingForm from "@/components/forms/RatingForm";
-import { config } from "../../../../config";
+import { configClient } from "../../../../config/configClient";
 import Button from "@/components/ui/Button";
 import { useRouter } from "next/navigation";
 import H1 from "@/components/ui/H1";
@@ -12,7 +12,7 @@ function Page() {
   const router = useRouter();
 
   const [scores, setScores] = useState<number[]>(
-    Array(config.traits.length).fill(null),
+    Array(configClient.traits.length).fill(null),
   );
   const [errorMsg, setErrorMsg] = useState<string>("");
 
@@ -35,15 +35,15 @@ function Page() {
   return (
     <form onSubmit={onSubmit} className="mb-8">
       <H1H2Spacing>
-        <H1>What do you think of {config.adminName}?</H1>
+        <H1>What do you think of {configClient.adminName}?</H1>
         <h2>
-          Please be honest and rate {config.adminName} on a scale of 1-10 for
-          each trait below.
+          Please be honest and rate {configClient.adminName} on a scale of 1-10
+          for each trait below.
         </h2>
       </H1H2Spacing>
 
       <ul className="space-y-4 mb-8">
-        {config.traits.map((trait, i) => (
+        {configClient.traits.map((trait, i) => (
           <li key={i}>
             <RatingForm updateScore={updateScore} trait={trait} i={i} />
           </li>

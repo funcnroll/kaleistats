@@ -1,7 +1,8 @@
 import Database from "better-sqlite3";
-import { config } from "../../config.js";
+import { configServer } from "../../config/configServer.js";
+import { configClient } from "../../config/configClient.js";
 
-const db = new Database(config.dbName);
+const db = new Database(configServer.dbName);
 db.pragma("journal_mode = WAL");
 
 db.exec(`
@@ -13,7 +14,7 @@ db.exec(`
 const existing = db.prepare("SELECT * FROM profiles").get();
 
 if (!existing) {
-  const traitsJson = JSON.stringify(config.traits);
+  const traitsJson = JSON.stringify(configClient.traits);
 
   db.prepare("INSERT INTO profiles (traits) VALUES (?)").run(traitsJson);
 

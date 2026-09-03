@@ -9,6 +9,8 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 function Page() {
+  //TODO: Prevent access if a session is already active
+
   const router = useRouter();
 
   const [password, setPassword] = useState<string>("");
