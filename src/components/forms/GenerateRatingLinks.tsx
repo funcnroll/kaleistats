@@ -6,8 +6,10 @@ import { generateTokens } from "@/lib/generateTokens";
 
 function GenerateRatingLinks({
   setTokensGenerated,
+  setLinks,
 }: {
   setTokensGenerated: (arg0: boolean) => void;
+  setLinks: (arg0: string[]) => void;
 }) {
   const [numLinks, setNumLinks] = useState("");
 
@@ -18,9 +20,10 @@ function GenerateRatingLinks({
     if (!numLinks || value <= 0) return;
 
     const tokens = generateTokens(value);
-    setTokensGenerated(true);
 
-    console.log(tokens);
+    setLinks(tokens.map((token) => `/rate/${token}`));
+
+    setTokensGenerated(true);
   }
 
   return (

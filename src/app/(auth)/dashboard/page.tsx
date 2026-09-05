@@ -11,6 +11,8 @@ import Modal from "@/components/ui/Modal";
 function Page() {
   const [tokensGenerated, setTokensGenerated] = useState<boolean>(false);
 
+  const [links, setLinks] = useState<string[]>([]);
+
   // Placeholder data for now works
   const data = configClient.traits.map((trait) => {
     return {
@@ -19,6 +21,7 @@ function Page() {
     };
   });
 
+  console.log(links);
   return (
     <div className="flex flex-col items-center">
       <H1H2Spacing>
@@ -39,7 +42,10 @@ function Page() {
         >
           Placeholder
         </Modal>
-        <GenerateRatingLinks setTokensGenerated={setTokensGenerated} />
+        <GenerateRatingLinks
+          setLinks={setLinks}
+          setTokensGenerated={setTokensGenerated}
+        />
       </div>
     </div>
   );
