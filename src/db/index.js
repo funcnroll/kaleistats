@@ -14,7 +14,7 @@ db.exec(`
 
 db.exec(`
   CREATE TABLE IF NOT EXISTS tokens (
-    token TEXT,
+    tokenUUID TEXT,
     status TEXT,
     expireTime INTEGER
   );

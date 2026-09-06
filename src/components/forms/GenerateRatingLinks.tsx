@@ -3,6 +3,7 @@ import { useState } from "react";
 import Button from "../ui/Button";
 import Input from "../ui/Input";
 import { generateTokens } from "@/lib/generateTokens";
+import { insertTokensIntoDb } from "@/lib/insertTokensIntoDb";
 
 function GenerateRatingLinks({
   setTokensGenerated,
@@ -22,6 +23,8 @@ function GenerateRatingLinks({
     const tokens = generateTokens(value);
 
     console.log(tokens);
+
+    insertTokensIntoDb(tokens);
 
     setLinks(
       // .host for testing purposes (port is needed for vite with nextjs)
