@@ -5,6 +5,7 @@ import { configClient } from "../../config/configClient.js";
 const db = new Database(configServer.dbName);
 db.pragma("journal_mode = WAL");
 
+// The design of the DB assumes only 1 admin
 db.exec(`
   CREATE TABLE IF NOT EXISTS ratings (
     traitName TEXT,
