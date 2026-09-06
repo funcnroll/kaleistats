@@ -12,6 +12,7 @@ export default function Button({
   children,
   ...rest
 }: ButtonProps) {
+  // TODO: Change design to ensure clear visibility everywhere
   const base =
     "rounded-md px-5 py-2 text-sm transition-all cursor-pointer w-full duration-300";
   const variants = {

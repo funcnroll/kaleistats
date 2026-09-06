@@ -21,7 +21,11 @@ function GenerateRatingLinks({
 
     const tokens = generateTokens(value);
 
-    setLinks(tokens.map((token) => `/rate/${token}`));
+    setLinks(
+      // .host for testing purposes (port is needed for vite with nextjs)
+      // .hostname for prod (port usually isn't needed/specified in the url)
+      tokens.map((token) => `${window.location.host}/rate/${token}`),
+    );
 
     setTokensGenerated(true);
   }

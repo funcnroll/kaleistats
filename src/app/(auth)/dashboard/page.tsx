@@ -7,6 +7,8 @@ import StatsRadarChart from "@/components/charts/StatsRadarChart";
 import GenerateRatingLinks from "@/components/forms/GenerateRatingLinks";
 import { useState } from "react";
 import Modal from "@/components/ui/Modal";
+import Button from "@/components/ui/Button";
+import { copyFormattedStringArrayToClipboard } from "@/lib/copyFormattedStringArrayToClipboard";
 
 function Page() {
   const [tokensGenerated, setTokensGenerated] = useState<boolean>(false);
@@ -21,7 +23,6 @@ function Page() {
     };
   });
 
-  console.log(links);
   return (
     <div className="flex flex-col items-center">
       <H1H2Spacing>
@@ -40,7 +41,13 @@ function Page() {
           isOpen={tokensGenerated}
           onClose={() => setTokensGenerated(false)}
         >
-          Placeholder
+          {links.length} unique links have been generated.
+          <Button
+            className="mt-4"
+            onClick={() => copyFormattedStringArrayToClipboard(links)}
+          >
+            Copy to clipboard
+          </Button>
         </Modal>
         <GenerateRatingLinks
           setLinks={setLinks}
