@@ -1,12 +1,4 @@
-import path from "path";
-import { fileURLToPath } from "url";
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
-export const config = {
-  // Change in .gitignore if using for dev purposes.
-  dbName: path.join(__dirname, "kaleistats.db"),
-
+export const configClient = {
   // For practical purposes, 3-8 traits are recommend.
   traits: [
     "Appearance",
