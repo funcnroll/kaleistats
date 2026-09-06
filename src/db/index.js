@@ -5,21 +5,21 @@ import { configClient } from "../../config/configClient.js";
 const db = new Database(configServer.dbName);
 db.pragma("journal_mode = WAL");
 
+// The design of the DB assumes only 1 admin
 db.exec(`
-  CREATE TABLE IF NOT EXISTS profiles (
-    traits TEXT NOT NULL
+  CREATE TABLE IF NOT EXISTS ratings (
+    traitName TEXT,
+    rating INTEGER
   );
 `);
 
-const existing = db.prepare("SELECT * FROM profiles").get();
-
-if (!existing) {
-  const traitsJson = JSON.stringify(configClient.traits);
-
-  db.prepare("INSERT INTO profiles (traits) VALUES (?)").run(traitsJson);
-
-  console.log("Database initialised with traits");
-}
+db.exec(`
+  CREATE TABLE IF NOT EXISTS tokens (
+    tokenUUID TEXT,
+    status TEXT,
+    expireTime INTEGER
+  );
+`);
 
 console.log("Database ready");
 export default db;

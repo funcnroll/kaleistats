@@ -2,11 +2,12 @@
 import RatingForm from "@/components/forms/RatingForm";
 import { configClient } from "../../../../config/configClient";
 import Button from "@/components/ui/Button";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import H1 from "@/components/ui/H1";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ErrMsg from "@/components/ui/ErrMsg";
 import H1H2Spacing from "@/components/layout/H1H2Spacing";
+import { setTokenStatusDb } from "@/lib/setTokenStatusDb";
 
 function Page() {
   const router = useRouter();
@@ -16,19 +17,28 @@ function Page() {
   );
   const [errorMsg, setErrorMsg] = useState<string>("");
 
+  const params = useParams();
+
   function updateScore(value: number, i: number) {
     setScores((prev) => prev.map((cur, idx) => (idx === i ? value : cur)));
   }
 
   function onSubmit(e: React.SubmitEvent<HTMLFormElement>) {
-    setErrorMsg("");
-
     e.preventDefault();
+
+    const token = params.token;
+
+    if (!token) return;
+
+    setErrorMsg("");
 
     if (scores.some((cur) => cur == null)) {
       setErrorMsg("Please select a rating for every trait");
       return;
     }
+
+    setTokenStatusDb("inactive", token?.toString());
+
     router.push("/thankyou");
   }
 
