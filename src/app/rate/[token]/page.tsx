@@ -4,7 +4,7 @@ import { configClient } from "../../../../config/configClient";
 import Button from "@/components/ui/Button";
 import { useRouter } from "next/navigation";
 import H1 from "@/components/ui/H1";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ErrMsg from "@/components/ui/ErrMsg";
 import H1H2Spacing from "@/components/layout/H1H2Spacing";
 

@@ -6,21 +6,19 @@ const db = new Database(configServer.dbName);
 db.pragma("journal_mode = WAL");
 
 db.exec(`
-  CREATE TABLE IF NOT EXISTS profiles (
-    traits TEXT NOT NULL,
-    tokens TEXT
+  CREATE TABLE IF NOT EXISTS ratings (
+    traitName TEXT,
+    rating INTEGER
   );
 `);
 
-const existing = db.prepare("SELECT * FROM profiles").get();
-
-if (!existing) {
-  const traitsJson = JSON.stringify(configClient.traits);
-
-  db.prepare("INSERT INTO profiles (traits) VALUES (?)").run(traitsJson);
-
-  console.log("Database initialised with traits");
-}
+db.exec(`
+  CREATE TABLE IF NOT EXISTS tokens (
+    token TEXT,
+    status TEXT,
+    expireTime INTEGER
+  );
+`);
 
 console.log("Database ready");
 export default db;
