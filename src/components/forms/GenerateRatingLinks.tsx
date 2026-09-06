@@ -21,6 +21,8 @@ function GenerateRatingLinks({
 
     const tokens = generateTokens(value);
 
+    console.log(tokens);
+
     setLinks(
       // .host for testing purposes (port is needed for vite with nextjs)
       // .hostname for prod (port usually isn't needed/specified in the url)
