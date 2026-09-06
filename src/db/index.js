@@ -7,7 +7,8 @@ db.pragma("journal_mode = WAL");
 
 db.exec(`
   CREATE TABLE IF NOT EXISTS profiles (
-    traits TEXT NOT NULL
+    traits TEXT NOT NULL,
+    tokens TEXT
   );
 `);
 
