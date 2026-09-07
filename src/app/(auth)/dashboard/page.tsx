@@ -9,7 +9,7 @@ import { useState } from "react";
 import Modal from "@/components/ui/Modal";
 import Button from "@/components/ui/Button";
 import { copyFormattedStringArrayToClipboard } from "@/lib/copyFormattedStringArrayToClipboard";
-import { useRouter } from "next/navigation";
+
 import NavButton from "@/components/ui/NavButton";
 
 function Page() {
@@ -24,8 +24,6 @@ function Page() {
       value: Math.floor(Math.random() * 100 + 1),
     };
   });
-
-  const router = useRouter();
 
   return (
     <div className="flex flex-col items-center">
