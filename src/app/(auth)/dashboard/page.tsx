@@ -9,6 +9,8 @@ import { useState } from "react";
 import Modal from "@/components/ui/Modal";
 import Button from "@/components/ui/Button";
 import { copyFormattedStringArrayToClipboard } from "@/lib/copyFormattedStringArrayToClipboard";
+import { useRouter } from "next/navigation";
+import NavButton from "@/components/ui/NavButton";
 
 function Page() {
   const [tokensGenerated, setTokensGenerated] = useState<boolean>(false);
@@ -22,6 +24,8 @@ function Page() {
       value: Math.floor(Math.random() * 100 + 1),
     };
   });
+
+  const router = useRouter();
 
   return (
     <div className="flex flex-col items-center">
@@ -53,6 +57,8 @@ function Page() {
           setLinks={setLinks}
           setTokensGenerated={setTokensGenerated}
         />
+
+        <NavButton path="/dashboard/tokens">See all tokens</NavButton>
       </div>
     </div>
   );
