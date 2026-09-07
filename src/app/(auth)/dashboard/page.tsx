@@ -10,6 +10,8 @@ import Modal from "@/components/ui/Modal";
 import Button from "@/components/ui/Button";
 import { copyFormattedStringArrayToClipboard } from "@/lib/copyFormattedStringArrayToClipboard";
 
+import NavButton from "@/components/ui/NavButton";
+
 function Page() {
   const [tokensGenerated, setTokensGenerated] = useState<boolean>(false);
 
@@ -53,6 +55,8 @@ function Page() {
           setLinks={setLinks}
           setTokensGenerated={setTokensGenerated}
         />
+
+        <NavButton path="/dashboard/tokens">See all tokens</NavButton>
       </div>
     </div>
   );
