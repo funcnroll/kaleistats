@@ -9,6 +9,7 @@ import H1 from "../ui/H1";
 import RatingForm from "./RatingForm";
 import { setTokenStatusDb } from "@/lib/setTokenStatusDb";
 import { useRouter } from "next/navigation";
+import { insertRatingIntoDb } from "@/lib/insertRatingIntoDb";
 
 type Props = {
   tokenUUID: string;
@@ -30,18 +31,25 @@ function RatingFormPage({ tokenUUID }: Props) {
 
   function onSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
-
     setErrorMsg("");
+    if (!tokenUUID) return;
 
     if (scores.some((cur) => cur == null)) {
       setErrorMsg("Please select a rating for every trait");
       return;
     }
 
-    if (!tokenUUID) return;
-    setTokenStatusDb("inactive", tokenUUID.toString());
+    const traitWithScore = scores.map((score, i) => {
+      return {
+        trait: configClient.traits[i],
+        score,
+      };
+    });
 
-    router.push("/thankyou");
+    insertRatingIntoDb(traitWithScore);
+    // setTokenStatusDb("inactive", tokenUUID.toString());
+
+    // router.push("/thankyou");
   }
 
   return (
