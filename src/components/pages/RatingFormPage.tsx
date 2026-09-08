@@ -1,15 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import { configClient } from "../../../config/configClient";
+
 import H1H2Spacing from "../layout/H1H2Spacing";
 import Button from "../ui/Button";
 import ErrMsg from "../ui/ErrMsg";
 import H1 from "../ui/H1";
-import RatingForm from "./RatingForm";
+import RatingForm from "../forms/RatingForm";
 import { setTokenStatusDb } from "@/lib/setTokenStatusDb";
 import { useRouter } from "next/navigation";
 import { insertRatingIntoDb } from "@/lib/insertRatingIntoDb";
+import { configClient } from "../../../config/configClient";
 
 type Props = {
   tokenUUID: string;
