@@ -50,11 +50,11 @@ function RatingFormPage({ tokenUUID }: Props) {
       await Promise.all([
         insertRatingIntoDb(traitWithScore),
         setTokenStatusDb("inactive", tokenUUID.toString()),
-      ])
-        router.push("/thankyou"));
+      ]);
+      router.push("/thankyou");
     } catch (err) {
       setErrorMsg("Failed to submit.");
-    } 
+    }
   }
 
   return (
