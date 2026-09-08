@@ -29,7 +29,7 @@ function RatingFormPage({ tokenUUID }: Props) {
     setScores((prev) => prev.map((cur, idx) => (idx === i ? value : cur)));
   }
 
-  function onSubmit(e: React.SubmitEvent<HTMLFormElement>) {
+  async function onSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
     setErrorMsg("");
     if (!tokenUUID) return;
@@ -46,10 +46,15 @@ function RatingFormPage({ tokenUUID }: Props) {
       };
     });
 
-    insertRatingIntoDb(traitWithScore);
-    // setTokenStatusDb("inactive", tokenUUID.toString());
-
-    // router.push("/thankyou");
+    try {
+      await Promise.all([
+        insertRatingIntoDb(traitWithScore),
+        setTokenStatusDb("inactive", tokenUUID.toString()),
+      ])
+        router.push("/thankyou"));
+    } catch (err) {
+      setErrorMsg("Failed to submit.");
+    } 
   }
 
   return (
