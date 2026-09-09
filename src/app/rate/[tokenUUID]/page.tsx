@@ -1,4 +1,4 @@
-import RatingFormPage from "@/components/forms/RatingFormPage";
+import RatingFormPage from "@/components/pages/RatingFormPage";
 import { isTokenValid } from "@/lib/isTokenValid";
 import { redirect } from "next/navigation";
 

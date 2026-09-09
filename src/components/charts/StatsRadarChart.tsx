@@ -1,5 +1,6 @@
 "use client";
 
+import { TraitRatingObjectDb } from "@/types/TraitRatingObjectDb";
 import {
   PolarAngleAxis,
   PolarGrid,
@@ -10,7 +11,7 @@ import {
 } from "recharts";
 
 type Props = {
-  data: { trait: string; value: number }[];
+  data: TraitRatingObjectDb[];
 };
 
 function StatsRadarChart({ data }: Props) {
@@ -24,7 +25,7 @@ function StatsRadarChart({ data }: Props) {
         >
           <PolarGrid stroke="#404040" />
           <PolarAngleAxis
-            dataKey="trait"
+            dataKey="traitName"
             tick={{
               // stone-200
               fill: "oklch(92.3% 0.003 48.717)",
@@ -34,12 +35,12 @@ function StatsRadarChart({ data }: Props) {
           />
           <PolarRadiusAxis
             angle={90}
-            domain={[0, 100]}
+            domain={[0, 10]}
             tick={false}
             axisLine={false}
           />
           <Radar
-            dataKey="value"
+            dataKey="avgRating"
             // violet-500
             stroke="oklch(60.6% 0.25 292.717)"
             fill="oklch(60.6% 0.25 292.717)"
