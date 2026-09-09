@@ -15,25 +15,17 @@ type Props = {
 };
 
 function StatsRadarChart({ data }: Props) {
-  const dataArr = data.map((token) => {
-    return {
-      trait: token.traitName,
-      value: token.rating,
-    };
-  });
-  console.log(dataArr);
-
   return (
     <div className="w-[90vh] h-[75vh] p-4">
       <ResponsiveContainer width="100%" height="100%">
         <RadarChart
-          data={dataArr}
+          data={data}
           outerRadius="90%"
           margin={{ top: 40, right: 60, bottom: 40, left: 60 }}
         >
           <PolarGrid stroke="#404040" />
           <PolarAngleAxis
-            dataKey="trait"
+            dataKey="traitName"
             tick={{
               // stone-200
               fill: "oklch(92.3% 0.003 48.717)",
@@ -43,12 +35,12 @@ function StatsRadarChart({ data }: Props) {
           />
           <PolarRadiusAxis
             angle={90}
-            domain={[0, 100]}
+            domain={[0, 10]}
             tick={false}
             axisLine={false}
           />
           <Radar
-            dataKey="value"
+            dataKey="avgRating"
             // violet-500
             stroke="oklch(60.6% 0.25 292.717)"
             fill="oklch(60.6% 0.25 292.717)"

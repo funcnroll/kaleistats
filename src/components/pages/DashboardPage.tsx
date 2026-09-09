@@ -16,6 +16,8 @@ function DashboardPage({ data }: { data: TraitRatingObjectDb[] }) {
 
   const [links, setLinks] = useState<string[]>([]);
 
+  console.log(data);
+
   return (
     <div className="flex flex-col items-center">
       <H1H2Spacing>
