@@ -13,4 +13,6 @@ export const configClient = {
 
   // Change to your name or alias. This is used for the admin page and rating form.
   adminName: "Placeholder",
+
+  dashboardRefreshTime: 10, // In seconds
 };

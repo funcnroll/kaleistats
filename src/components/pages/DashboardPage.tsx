@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { configClient } from "../../../config/configClient";
 import H1H2Spacing from "../layout/H1H2Spacing";
 import H1 from "../ui/H1";
@@ -10,13 +10,26 @@ import NavButton from "../ui/NavButton";
 import Button from "../ui/Button";
 import StatsRadarChart from "../charts/StatsRadarChart";
 import { TraitRatingObjectDb } from "@/types/TraitRatingObjectDb";
+import { useRouter } from "next/navigation";
 
 function DashboardPage({ data }: { data: TraitRatingObjectDb[] }) {
   const [tokensGenerated, setTokensGenerated] = useState<boolean>(false);
 
   const [links, setLinks] = useState<string[]>([]);
 
-  console.log(data);
+  const router = useRouter();
+
+  // Works because the dashboard page itself is the only component calling getAllRatingsAndAverages()
+  // The total scale and use case of the app doesn't justify something like SWR.
+  // The use case is small enough (one admin),
+  // that this is a simple and straightforward option for pseudolive updates compared to other available options.
+  useEffect(() => {
+    const interval = setInterval(() => {
+      router.refresh();
+    }, configClient.dashboardRefreshTime * 1000);
+
+    return () => clearInterval(interval);
+  }, [router]);
 
   return (
     <div className="flex flex-col items-center">
