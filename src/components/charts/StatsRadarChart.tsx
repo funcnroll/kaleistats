@@ -1,5 +1,6 @@
 "use client";
 
+import { TraitRatingObjectDb } from "@/types/TraitRatingObjectDb";
 import {
   PolarAngleAxis,
   PolarGrid,
@@ -10,15 +11,23 @@ import {
 } from "recharts";
 
 type Props = {
-  data: { trait: string; value: number }[];
+  data: TraitRatingObjectDb[];
 };
 
 function StatsRadarChart({ data }: Props) {
+  const dataArr = data.map((token) => {
+    return {
+      trait: token.traitName,
+      value: token.rating,
+    };
+  });
+  console.log(dataArr);
+
   return (
     <div className="w-[90vh] h-[75vh] p-4">
       <ResponsiveContainer width="100%" height="100%">
         <RadarChart
-          data={data}
+          data={dataArr}
           outerRadius="90%"
           margin={{ top: 40, right: 60, bottom: 40, left: 60 }}
         >
