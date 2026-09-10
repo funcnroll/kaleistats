@@ -1,13 +1,24 @@
 import NavButton from "@/components/ui/NavButton";
+import TokenPageInput from "@/components/ui/TokenPageInput";
+
 import TokenRow from "@/components/ui/TokenRow";
-import { getAllTokens } from "@/lib/getAllTokens";
+
+import { getPaginatedTokens } from "@/lib/getPaginatedTokens";
 import { timestampToDate } from "@/lib/timestampToDate";
 
-async function Page() {
-  const tokens = await getAllTokens();
+async function Page(props: {
+  searchParams?: Promise<{
+    page?: string;
+  }>;
+}) {
+  const currentPage = Number((await props.searchParams)?.page || 1);
+  const currentTokens = await getPaginatedTokens(currentPage);
+
+  console.log(currentPage, currentTokens);
 
   return (
     <div className="w-full flex flex-col gap-8">
+      <TokenPageInput />
       <NavButton path="/dashboard">Go back</NavButton>
       <table className="text-sm text-left text-neutral-200">
         <thead>
@@ -19,7 +30,7 @@ async function Page() {
           </tr>
         </thead>
         <tbody>
-          {tokens.map((token) => {
+          {currentTokens.map((token) => {
             return (
               <TokenRow
                 uuid={token.tokenUUID}
