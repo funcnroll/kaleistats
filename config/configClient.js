@@ -15,7 +15,4 @@ export const configClient = {
   adminName: "Placeholder",
 
   dashboardRefreshTime: 10, // In seconds
-
-
-  hostType: 
 };
