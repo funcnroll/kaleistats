@@ -16,21 +16,21 @@ function TokenRow({
 
   return (
     <tr className="border-b border-neutral-800">
-      <Button
-        className="max-w-3xs"
-        onClick={() => {
-          navigator.clipboard.writeText(
-            `${window.location.hostname}/rate/${uuid}`,
-          );
-        }}
-      >
-        Copy Link
-      </Button>
       <td>{uuid}</td>
       <td>{status}</td>
       <td>{expireDate}</td>
       <td>
-        {/* May expand, but this suffices for now. */}
+        <Button
+          onClick={() => {
+            navigator.clipboard.writeText(
+              `${window.location.hostname}/rate/${uuid}`,
+            );
+          }}
+        >
+          Copy Link
+        </Button>
+      </td>
+      <td>
         <Button
           onClick={async () => {
             await setTokenStatusDb("inactive", uuid);
