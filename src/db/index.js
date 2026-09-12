@@ -15,6 +15,7 @@ db.exec(`
 
 db.exec(`
   CREATE TABLE IF NOT EXISTS tokens (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     tokenUUID TEXT,
     status TEXT,
     expireTime INTEGER
