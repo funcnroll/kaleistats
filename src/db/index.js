@@ -22,5 +22,17 @@ db.exec(`
   );
 `);
 
+db.exec(`
+  CREATE TABLE IF NOT EXISTS config (
+    id INTEGER PRIMARY KEY CHECK (id = 0), 
+    pseudoanonymisation_enabled INTEGER NOT NULL
+  );
+`);
+
+db.prepare(
+  `
+  INSERT OR IGNORE INTO config VALUES (0,1)`,
+).run();
+
 console.log("Database ready");
 export default db;

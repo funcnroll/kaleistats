@@ -11,6 +11,8 @@ import { setTokenStatusDb } from "@/lib/setTokenStatusDb";
 import { useRouter } from "next/navigation";
 import { insertRatingIntoDb } from "@/lib/insertRatingIntoDb";
 import { configClient } from "../../../config/configClient";
+import { isPseudoanonymisationTrue } from "@/lib/isPseudoanonymisationTrue";
+import { deleteTokenFromDb } from "@/lib/deleteTokenFromDb";
 
 type Props = {
   tokenUUID: string;
@@ -48,10 +50,18 @@ function RatingFormPage({ tokenUUID }: Props) {
     });
 
     try {
-      await Promise.all([
-        insertRatingIntoDb(traitWithScore),
-        setTokenStatusDb("inactive", tokenUUID.toString()),
-      ]);
+      if (await isPseudoanonymisationTrue()) {
+        await Promise.all([
+          insertRatingIntoDb(traitWithScore),
+          deleteTokenFromDb(tokenUUID.toString()),
+        ]);
+      } else {
+        await Promise.all([
+          insertRatingIntoDb(traitWithScore),
+          setTokenStatusDb("inactive", tokenUUID.toString()),
+        ]);
+      }
+
       router.push("/thankyou");
     } catch (err) {
       setErrorMsg("Failed to submit.");
