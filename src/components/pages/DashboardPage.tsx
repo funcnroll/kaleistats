@@ -52,6 +52,7 @@ function DashboardPage({ data }: { data: TraitRatingObjectDb[] }) {
           {links.length} unique links have been generated.
           <Button
             className="mt-4"
+            // TODO: copy only real tokens if pseudoanonymisation is true
             onClick={() => copyFormattedStringArrayToClipboard(links)}
           >
             Copy to clipboard

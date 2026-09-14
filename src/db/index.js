@@ -13,12 +13,16 @@ db.exec(`
   );
 `);
 
+// fg_43F: decoy token marker. Deliberately non-descriptive column name
+// to avoid tipping off casual DB browsing. NOT intended as a security boundary
+// against source/DB access. See README.md
 db.exec(`
   CREATE TABLE IF NOT EXISTS tokens (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     tokenUUID TEXT,
     status TEXT,
-    expireTime INTEGER
+    expireTime INTEGER,
+    fg_43F INTEGER
   );
 `);
 

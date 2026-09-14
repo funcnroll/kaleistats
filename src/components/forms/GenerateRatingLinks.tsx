@@ -14,15 +14,15 @@ function GenerateRatingLinks({
 }) {
   const [numLinks, setNumLinks] = useState("");
 
-  function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
 
     const value = Number(numLinks);
     if (!numLinks || value <= 0) return;
 
-    const tokens = generateTokens(value);
+    const tokens = await generateTokens(value);
 
-    insertTokensIntoDb(tokens);
+    await insertTokensIntoDb(tokens);
 
     setLinks(
       // .host for testing purposes (port is needed for vite with nextjs)
