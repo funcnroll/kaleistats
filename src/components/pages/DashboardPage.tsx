@@ -53,6 +53,12 @@ function DashboardPage({ data }: { data: TraitRatingObjectDb[] }) {
           <Button
             className="mt-4"
             // TODO: copy only real tokens if pseudoanonymisation is true
+
+            // Even with an X-hour deletion buffer, this whole setup
+            // relies on the admin not actively keeping a mental spreadsheet of who
+            // they handed tokens to. Scale and noise (decoys/UUIDs) usually stop casual
+            // memory, but focused human memory/manual tracking remains the ultimate weakness
+            // closely behind simply checking the DB
             onClick={() => copyFormattedStringArrayToClipboard(links)}
           >
             Copy to clipboard

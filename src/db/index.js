@@ -16,6 +16,7 @@ db.exec(`
 // fg_43F: decoy token marker. Deliberately non-descriptive column name
 // to avoid tipping off casual DB browsing. NOT intended as a security boundary
 // against source/DB access. See README.md
+// TODO: add delay of X hours before token deletion directly tied to startDate in generateTokenExpireTIme
 db.exec(`
   CREATE TABLE IF NOT EXISTS tokens (
     id INTEGER PRIMARY KEY AUTOINCREMENT,

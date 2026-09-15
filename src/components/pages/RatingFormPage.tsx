@@ -53,6 +53,7 @@ function RatingFormPage({ tokenUUID }: Props) {
       if (await isPseudoanonymisationTrue()) {
         await Promise.all([
           insertRatingIntoDb(traitWithScore),
+          // TODO: add delay of X hours before it gets deleted tied to startDate in generateTokenExpireTime
           deleteTokenFromDb(tokenUUID.toString()),
         ]);
       } else {
