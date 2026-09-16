@@ -19,6 +19,8 @@ export async function generateTokens(amount: number) {
 
   const tokenStatus: TokenStatus = "active";
 
+  const isUsed = 0;
+
   // TODO: fix two equal UUIDs making generated
   if (await isPseudoanonymisationTrue()) {
     // Exponential decay
@@ -35,10 +37,18 @@ export async function generateTokens(amount: number) {
     )) as number[];
 
     for (let i = 0; i < numDecoys; i++) {
-      const fg_43F = 1;
+      const isDecoy = 1;
+
       const tokenUUID = self.crypto.randomUUID();
       const expire = tokenExpireTimeArr[i];
-      const token = { tokenUUID, tokenStatus, tokenExpireTime: expire, fg_43F };
+      const token = {
+        tokenUUID,
+        tokenStatus,
+        tokenExpireTime: expire,
+        fg_43F: isDecoy,
+        Alj_1f: isUsed,
+        Eka_9b: null,
+      };
       tokens.push(token);
     }
 
@@ -46,7 +56,14 @@ export async function generateTokens(amount: number) {
       const fg_43F = 0;
       const tokenUUID = self.crypto.randomUUID();
       const expire = tokenExpireTimeArr[i];
-      const token = { tokenUUID, tokenStatus, tokenExpireTime: expire, fg_43F };
+      const token = {
+        tokenUUID,
+        tokenStatus,
+        tokenExpireTime: expire,
+        fg_43F,
+        Alj_1f: isUsed,
+        Eka_9b: null,
+      };
       tokens.push(token);
     }
 
@@ -59,7 +76,14 @@ export async function generateTokens(amount: number) {
 
     for (let i = 0; i < amount; i++) {
       const tokenUUID = self.crypto.randomUUID();
-      const token = { tokenUUID, tokenStatus, tokenExpireTime, fg_43F };
+      const token = {
+        tokenUUID,
+        tokenStatus,
+        tokenExpireTime,
+        fg_43F,
+        Alj_1f: isUsed,
+        Eka_9b: null,
+      };
       tokens.push(token);
     }
 

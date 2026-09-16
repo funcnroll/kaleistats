@@ -10,6 +10,12 @@ import { useEffect, useState } from "react";
 import { TokenObjectDb } from "@/types/TokenObjectDb";
 import { searchForTokenValue } from "@/lib/searchForTokenValue";
 import { file } from "better-auth";
+import { getAllUsedTokens } from "@/lib/getAllUsedTokens";
+import { isPseudoanonymisationTrue } from "@/lib/isPseudoanonymisationTrue";
+import { deleteTokenFromDb } from "@/lib/deleteTokenFromDb";
+import { getAllTokens } from "@/lib/getAllTokens";
+import { setTokenStatusDb } from "@/lib/setTokenStatusDb";
+import { processTokenMaintenance } from "@/lib/processTokenMaintenance";
 
 function TokensPage({
   currentPage,
@@ -22,6 +28,14 @@ function TokensPage({
   const [selectedFilter, setSelectedFilter] = useState<string>("uuid");
 
   const [filteredTokens, setFilteredTokens] = useState(currentTokens);
+
+  useEffect(() => {
+    async function runCleanup() {
+      await processTokenMaintenance();
+    }
+
+    runCleanup();
+  }, []);
 
   useEffect(() => {
     async function getTokens() {
@@ -47,6 +61,7 @@ function TokensPage({
         <LastPaginationPageButton currentPage={currentPage} />
         <NextPaginationPageButton currentPage={currentPage} />
         <NavButton path="/dashboard">Go back</NavButton>
+        {/* TODO: implement debounce */}
         <SearchFilter
           setSelectedFilter={setSelectedFilter}
           selectedFilter={selectedFilter}

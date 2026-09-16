@@ -14,16 +14,20 @@ db.exec(`
 `);
 
 // fg_43F: decoy token marker. Deliberately non-descriptive column name
-// to avoid tipping off casual DB browsing. NOT intended as a security boundary
+// Alj_1f: used in conjuction with fg_43f. Marks token to be deleted after X hours.
+// Eka_9b: used in conjuction with fg_43f & Alj_1f. Time in unix time (ms) to be deleted after use
+// Deliberately non-descriptive column names to avoid tipping off casual DB browsing.
+//  NOT intended as a security boundary
 // against source/DB access. See README.md
-// TODO: add delay of X hours before token deletion directly tied to startDate in generateTokenExpireTIme
 db.exec(`
   CREATE TABLE IF NOT EXISTS tokens (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     tokenUUID TEXT,
     status TEXT,
     expireTime INTEGER,
-    fg_43F INTEGER
+    fg_43F INTEGER,
+    Alj_1f INTEGER,
+    Eka_9b INTEGER
   );
 `);
 

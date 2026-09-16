@@ -9,7 +9,8 @@ export async function isTokenValid(tokenUUID: string): Promise<boolean> {
   if (!run) return false;
   const isInactive = run.status === "inactive";
   const isExpired = run.expireTime < Date.now();
+  const isUsed = run.Alj_1f === 1;
 
-  if (isInactive || isExpired) return false;
+  if (isInactive || isExpired || isUsed) return false;
   return true;
 }

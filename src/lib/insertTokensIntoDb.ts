@@ -7,7 +7,7 @@ export async function insertTokensIntoDb(tokens: TokenObject[]) {
   // According to the docs, this is the most efficient way to mass write
 
   const insert = db.prepare(
-    `INSERT INTO tokens (tokenUUID, status, expireTime, fg_43F) VALUES (@tokenUUID, @tokenStatus, @tokenExpireTime, @fg_43F)`,
+    `INSERT INTO tokens (tokenUUID, status, expireTime, fg_43F, Alj_1f, Eka_9b) VALUES (@tokenUUID, @tokenStatus, @tokenExpireTime, @fg_43F, @Alj_1f, @Eka_9b)`,
   );
 
   const insertMany = db.transaction((tokens) => {

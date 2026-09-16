@@ -13,6 +13,7 @@ import { insertRatingIntoDb } from "@/lib/insertRatingIntoDb";
 import { configClient } from "../../../config/configClient";
 import { isPseudoanonymisationTrue } from "@/lib/isPseudoanonymisationTrue";
 import { deleteTokenFromDb } from "@/lib/deleteTokenFromDb";
+import { setTokenUsed } from "@/lib/setTokenUsed";
 
 type Props = {
   tokenUUID: string;
@@ -53,8 +54,7 @@ function RatingFormPage({ tokenUUID }: Props) {
       if (await isPseudoanonymisationTrue()) {
         await Promise.all([
           insertRatingIntoDb(traitWithScore),
-          // TODO: add delay of X hours before it gets deleted tied to startDate in generateTokenExpireTime
-          deleteTokenFromDb(tokenUUID.toString()),
+          setTokenUsed(tokenUUID.toString()),
         ]);
       } else {
         await Promise.all([

@@ -1,4 +1,5 @@
 import { generateRandomDate } from "./generateRandomDate";
+import { getTimeBounds } from "./getTimeBounds";
 import { isPseudoanonymisationTrue } from "./isPseudoanonymisationTrue";
 
 export async function generateTokenExpireTime(
@@ -6,10 +7,7 @@ export async function generateTokenExpireTime(
   amountDecoys?: number,
 ) {
   if ((await isPseudoanonymisationTrue()) && amountTokens && amountDecoys) {
-    // + 8h buffer
-    const startDate = Date.now() + 3600 * 8 * 1000;
-    // Max 1 week in the future
-    const endDate = startDate + 86000 * 1000 * 7;
+    const { startDate, endDate } = getTimeBounds();
 
     const expireTimes = [];
 
