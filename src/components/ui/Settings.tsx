@@ -1,6 +1,9 @@
 "use client";
 
+import { useState } from "react";
 import Modal from "./Modal";
+import OnoffSlider from "./OnOffSlider";
+import { setPseudoanonymisationInDb } from "@/lib/setPseudoanonymisationInDb";
 
 function Settings({
   settingsOpen,
@@ -9,6 +12,15 @@ function Settings({
   settingsOpen: boolean;
   setSettingsOpen: (arg1: boolean) => void;
 }) {
+  const [statePseudoanonymisation, setStatePseudoanonymisation] =
+    useState(false);
+
+  async function onClick() {
+    const nextState = !statePseudoanonymisation;
+    setStatePseudoanonymisation(nextState);
+    await setPseudoanonymisationInDb(nextState);
+  }
+
   return (
     <div>
       {/* Heroicons cog-6-tooth outline */}
@@ -34,7 +46,20 @@ function Settings({
       </svg>
 
       <Modal isOpen={settingsOpen} onClose={() => setSettingsOpen(false)}>
-        Settings
+        <div className="flex items-center justify-between ">
+          <OnoffSlider
+            statePseudoanonymisation={statePseudoanonymisation}
+            onClick={onClick}
+          />
+          <p>
+            Pseudoanonymisation{" "}
+            {statePseudoanonymisation ? (
+              <span className="font-bold">On</span>
+            ) : (
+              <span className="font-bold">Off</span>
+            )}
+          </p>
+        </div>
       </Modal>
     </div>
   );
