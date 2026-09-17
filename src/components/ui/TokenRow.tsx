@@ -7,18 +7,27 @@ function TokenRow({
   uuid,
   status,
   expireDate,
+  isPseudoanonymisationTrue,
 }: {
   uuid: string;
   status: string;
   expireDate: string;
+  isPseudoanonymisationTrue: boolean;
 }) {
   const router = useRouter();
 
   return (
     <tr className="border-b border-neutral-800">
       <td>{uuid}</td>
-      <td>{status}</td>
-      <td>{expireDate}</td>
+      {isPseudoanonymisationTrue ? (
+        // No expireDate is shown if true
+        <td>{status}</td>
+      ) : (
+        <>
+          <td>{status}</td>
+          <td>{expireDate}</td>
+        </>
+      )}
       <td>
         <Button
           onClick={() => {
