@@ -11,11 +11,13 @@ import Button from "../ui/Button";
 import StatsRadarChart from "../charts/StatsRadarChart";
 import { TraitRatingObjectDb } from "@/types/TraitRatingObjectDb";
 import { useRouter } from "next/navigation";
+import Settings from "../ui/Settings";
 
 function DashboardPage({ data }: { data: TraitRatingObjectDb[] }) {
   const [tokensGenerated, setTokensGenerated] = useState<boolean>(false);
 
   const [links, setLinks] = useState<string[]>([]);
+  const [settingsOpen, setSettingsOpen] = useState(false);
 
   const router = useRouter();
 
@@ -37,6 +39,9 @@ function DashboardPage({ data }: { data: TraitRatingObjectDb[] }) {
         <H1>Hello {configClient.adminName}</H1>
         <h2>Here's how people see you, based on responses so far.</h2>
       </H1H2Spacing>
+
+      <Settings settingsOpen={settingsOpen} setSettingsOpen={setSettingsOpen} />
+
       <StatsRadarChart data={data} />
 
       <div>

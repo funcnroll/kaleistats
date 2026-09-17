@@ -40,7 +40,7 @@ db.exec(`
 
 db.prepare(
   `
-  INSERT OR IGNORE INTO config VALUES (0,1)`,
+  INSERT OR IGNORE INTO config VALUES (0,0)`,
 ).run();
 
 console.log("Database ready");
