@@ -4,6 +4,7 @@ import { useState } from "react";
 import Modal from "./Modal";
 import OnoffSlider from "./OnOffSlider";
 import { setPseudoanonymisationInDb } from "@/lib/setPseudoanonymisationInDb";
+import { toast } from "react-hot-toast";
 
 function Settings({
   settingsOpen,
@@ -19,6 +20,17 @@ function Settings({
     const nextState = !statePseudoanonymisation;
     setStatePseudoanonymisation(nextState);
     await setPseudoanonymisationInDb(nextState);
+
+    toast.success(`Successfully turned ${nextState ? "on" : "off"}`, {
+      duration: 4000,
+    });
+
+    toast.success(
+      ` ${nextState ? "Pseudoanonymisation will be applied to new tokens." : "Old decoy tokens will be wiped and some issues may occur with existing real tokens."}`,
+      {
+        duration: 5000,
+      },
+    );
   }
 
   return (
