@@ -9,6 +9,7 @@ import { timestampToDate } from "@/lib/timestampToDate";
 import LastPaginationPageButton from "@/components/ui/LastPaginationPageButton";
 import SearchFilter from "@/components/ui/SearchFilter";
 import TokensPage from "@/components/pages/TokensPage";
+import { isPseudoanonymisationTrue } from "@/lib/isPseudoanonymisationTrue";
 
 async function Page(props: {
   searchParams?: Promise<{
@@ -17,8 +18,15 @@ async function Page(props: {
 }) {
   const currentPage = Number((await props.searchParams)?.page || 1);
   const currentTokens = await getPaginatedTokens(currentPage);
+  const pseudoanonymisationValue = await isPseudoanonymisationTrue();
 
-  return <TokensPage currentPage={currentPage} currentTokens={currentTokens} />;
+  return (
+    <TokensPage
+      currentPage={currentPage}
+      currentTokens={currentTokens}
+      isPseudoanonymisationTrue={pseudoanonymisationValue}
+    />
+  );
 }
 
 export default Page;

@@ -20,9 +20,11 @@ import { processTokenMaintenance } from "@/lib/processTokenMaintenance";
 function TokensPage({
   currentPage,
   currentTokens,
+  isPseudoanonymisationTrue,
 }: {
   currentPage: number;
   currentTokens: TokenObjectDb[];
+  isPseudoanonymisationTrue: boolean;
 }) {
   const [search, setSearch] = useState<string>("");
   const [selectedFilter, setSelectedFilter] = useState<string>("uuid");
@@ -75,13 +77,15 @@ function TokensPage({
             <tr className="border-b border-neutral-700">
               <th>Token/UUID</th>
               <th>Status</th>
-              <th>Expires (DD/MM/YYYY)</th>
+              {/* Not shown if pseudoanonymisation is true */}
+              {!isPseudoanonymisationTrue && <th>Expires (DD/MM/YYYY)</th>}
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
             {filteredTokens.map((token) => (
               <TokenRow
+                isPseudoanonymisationTrue={isPseudoanonymisationTrue}
                 key={token.tokenUUID}
                 uuid={token.tokenUUID}
                 status={token.status}

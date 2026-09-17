@@ -29,7 +29,7 @@ export async function generateTokens(amount: number) {
     // amountTokens * amountDecoys||1 in a loop would be highly inefficient, so this is the best workaround.
     const numDecoys =
       Math.round(CEILING * Math.pow(Math.E, -lambda * amount)) + 1;
-    // TODO:  hide on dashboard & only set to "inactive" after expire
+
     const tokenExpireTimeArr = (await generateTokenExpireTime(
       amount,
       numDecoys,
