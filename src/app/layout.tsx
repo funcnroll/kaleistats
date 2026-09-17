@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import AuthNath from "@/components/layout/AuthNav";
+import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
   title: "Kaleistats",
@@ -15,6 +16,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <AuthNath />
         </div>
         <main className="flex-1 flex items-start justify-center pt-16 px-4">
+          <Toaster position="top-right" />
           {children}
         </main>
       </body>
