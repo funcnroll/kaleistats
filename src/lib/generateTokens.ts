@@ -21,7 +21,6 @@ export async function generateTokens(amount: number) {
 
   const isUsed = 0;
 
-  // TODO: fix two equal UUIDs making generated
   if (await isPseudoanonymisationTrue()) {
     // Exponential decay
     // Lower n of tokens correlates to higher risk of casual obseration, higher n of tokens correlates lower such risk ("safety in numbers")
