@@ -40,21 +40,26 @@ function TokensPage({
   }, []);
 
   useEffect(() => {
-    async function getTokens() {
+    let isMounted = true;
+
+    async function syncTokens() {
       if (!search) {
-        setFilteredTokens(currentTokens);
+        if (isMounted) setFilteredTokens(currentTokens);
         return;
       }
-      const filteredTokens = await searchForTokenValue(selectedFilter, search);
 
-      // The component handles empty arrays
-      if (!filteredTokens) return [];
-
-      setFilteredTokens(filteredTokens);
+      const results = await searchForTokenValue(selectedFilter, search);
+      if (isMounted) {
+        setFilteredTokens(results || []);
+      }
     }
 
-    getTokens();
-  }, [search, selectedFilter]);
+    syncTokens();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [search, selectedFilter, currentTokens]);
 
   return (
     <div className="w-full flex flex-col gap-8">
