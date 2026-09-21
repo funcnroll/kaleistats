@@ -1,7 +1,9 @@
 "use client";
+
 import { setTokenStatusDb } from "@/lib/setTokenStatusDb";
 import Button from "./Button";
 import { useRouter } from "next/navigation";
+import { toast } from "react-hot-toast";
 
 function TokenRow({
   uuid,
@@ -43,6 +45,7 @@ function TokenRow({
         <Button
           onClick={async () => {
             await setTokenStatusDb("inactive", uuid);
+            toast.success(`Successfully revoked token`, { duration: 4000 });
             router.refresh();
           }}
         >

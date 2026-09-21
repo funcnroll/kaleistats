@@ -12,6 +12,7 @@ import StatsRadarChart from "../charts/StatsRadarChart";
 import { TraitRatingObjectDb } from "@/types/TraitRatingObjectDb";
 import { useRouter } from "next/navigation";
 import Settings from "../ui/Settings";
+import { toast } from "react-hot-toast";
 
 function DashboardPage({ data }: { data: TraitRatingObjectDb[] }) {
   const [tokensGenerated, setTokensGenerated] = useState<boolean>(false);
@@ -62,7 +63,10 @@ function DashboardPage({ data }: { data: TraitRatingObjectDb[] }) {
             // they handed tokens to. Scale and noise (decoys/UUIDs) usually stop casual
             // memory, but focused human memory/manual tracking remains the ultimate weakness
             // closely behind simply checking the DB
-            onClick={() => copyFormattedStringArrayToClipboard(links)}
+            onClick={() => {
+              copyFormattedStringArrayToClipboard(links);
+              toast.success("Copied to clipboard", { duration: 4000 });
+            }}
           >
             Copy to clipboard
           </Button>

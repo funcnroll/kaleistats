@@ -7,6 +7,7 @@ import Input from "@/components/ui/Input";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import { toast } from "react-hot-toast";
 
 function Page() {
   //TODO: Prevent access if a session is already active
@@ -37,7 +38,7 @@ function Page() {
           router.push("/dashboard");
         },
         onError: (ctx) => {
-          alert(ctx.error.message);
+          toast.error(ctx.error.message, { duration: 5000 });
         },
       },
     );

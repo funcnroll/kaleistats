@@ -14,6 +14,7 @@ import { configClient } from "../../../config/configClient";
 import { isPseudoanonymisationTrue } from "@/lib/isPseudoanonymisationTrue";
 import { deleteTokenFromDb } from "@/lib/deleteTokenFromDb";
 import { setTokenUsed } from "@/lib/setTokenUsed";
+import { toast } from "react-hot-toast";
 
 type Props = {
   tokenUUID: string;
@@ -65,7 +66,7 @@ function RatingFormPage({ tokenUUID }: Props) {
 
       router.push("/thankyou");
     } catch (err) {
-      setErrorMsg("Failed to submit.");
+      toast.error(`Error: ${err}`, { duration: 5000 });
     }
   }
 
