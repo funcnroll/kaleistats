@@ -1,10 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "./Modal";
 import OnoffSlider from "./OnOffSlider";
 import { setPseudoanonymisationInDb } from "@/lib/setPseudoanonymisationInDb";
 import { toast } from "react-hot-toast";
+import { deleteAllTokenFromDb } from "@/lib/deleteAllDecoyTokens";
+import { isPseudoanonymisationTrue } from "@/lib/isPseudoanonymisationTrue";
 
 function Settings({
   settingsOpen,
@@ -13,13 +15,32 @@ function Settings({
   settingsOpen: boolean;
   setSettingsOpen: (arg1: boolean) => void;
 }) {
-  const [statePseudoanonymisation, setStatePseudoanonymisation] =
-    useState(false);
+  const [statePseudoanonymisation, setStatePseudoanonymisation] = useState<
+    boolean | undefined
+  >(undefined);
+
+  useEffect(() => {
+    async function loadState() {
+      try {
+        const dbState = await isPseudoanonymisationTrue();
+        setStatePseudoanonymisation(dbState);
+      } catch (error) {
+        toast.error(`Error: ${error}`, {
+          duration: 5000,
+        });
+      }
+    }
+    loadState();
+  }, []);
 
   async function onClick() {
     const nextState = !statePseudoanonymisation;
     setStatePseudoanonymisation(nextState);
     await setPseudoanonymisationInDb(nextState);
+
+    if (statePseudoanonymisation) {
+      await deleteAllTokenFromDb();
+    }
 
     toast.success(`Successfully turned ${nextState ? "on" : "off"}`, {
       duration: 4000,
