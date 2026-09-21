@@ -38,7 +38,8 @@ function Page() {
           router.push("/dashboard");
         },
         onError: (ctx) => {
-          toast.error(ctx.error.message, { duration: 5000 });
+          console.error("Failed to register", ctx.error.message);
+          toast.error("Failed to register");
         },
       },
     );

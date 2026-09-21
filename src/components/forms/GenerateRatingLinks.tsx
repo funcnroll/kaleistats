@@ -18,41 +18,46 @@ function GenerateRatingLinks({
   const [numLinks, setNumLinks] = useState("");
 
   async function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
-    e.preventDefault();
+    try {
+      e.preventDefault();
 
-    const value = Number(numLinks);
-    if (!numLinks || value <= 0) return;
+      const value = Number(numLinks);
+      if (!numLinks || value <= 0) return;
 
-    const tokens = await generateTokens(value);
+      const tokens = await generateTokens(value);
 
-    await insertTokensIntoDb(tokens);
+      await insertTokensIntoDb(tokens);
 
-    if (await isPseudoanonymisationTrue()) {
-      const realTokens = tokens.filter((token) => token.fg_43F == 0);
+      if (await isPseudoanonymisationTrue()) {
+        const realTokens = tokens.filter((token) => token.fg_43F == 0);
 
-      console.log(realTokens);
+        console.log(realTokens);
+        setLinks(
+          realTokens.map(
+            (token) => `${window.location.origin}/rate/${token.tokenUUID}`,
+          ),
+        );
+        setTokensGenerated(true);
+
+        toast.success(`Successfully generated ${tokens.length} tokens`, {
+          duration: 4000,
+        });
+        return;
+      }
+
       setLinks(
-        realTokens.map(
+        tokens.map(
           (token) => `${window.location.origin}/rate/${token.tokenUUID}`,
         ),
       );
       setTokensGenerated(true);
-
       toast.success(`Successfully generated ${tokens.length} tokens`, {
         duration: 4000,
       });
-      return;
+    } catch (err) {
+      console.error("Failed to generate tokens", err);
+      toast.error("Failed to generate tokens");
     }
-
-    setLinks(
-      tokens.map(
-        (token) => `${window.location.origin}/rate/${token.tokenUUID}`,
-      ),
-    );
-    setTokensGenerated(true);
-    toast.success(`Successfully generated ${tokens.length} tokens`, {
-      duration: 4000,
-    });
   }
 
   return (

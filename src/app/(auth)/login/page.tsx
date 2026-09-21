@@ -5,6 +5,7 @@ import H1 from "@/components/ui/H1";
 import Input from "@/components/ui/Input";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
+import { toast } from "react-hot-toast";
 
 function Page() {
   //TODO: Prevent access if a session is already active
@@ -28,7 +29,8 @@ function Page() {
           router.push("/dashboard");
         },
         onError: (ctx) => {
-          alert(ctx.error.message);
+          console.error(ctx.error.message);
+          toast.error("Failed to login");
         },
       },
     );

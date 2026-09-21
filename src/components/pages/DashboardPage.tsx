@@ -28,7 +28,12 @@ function DashboardPage({ data }: { data: TraitRatingObjectDb[] }) {
   // that this is a simple and straightforward option for pseudolive updates compared to other available options.
   useEffect(() => {
     const interval = setInterval(() => {
-      router.refresh();
+      try {
+        router.refresh();
+      } catch (err) {
+        console.error("Failed to refresh dashboard", err);
+        toast.error("Failed to refresh dashboard");
+      }
     }, configClient.dashboardRefreshTime * 1000);
 
     return () => clearInterval(interval);

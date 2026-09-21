@@ -24,34 +24,33 @@ function Settings({
       try {
         const dbState = await isPseudoanonymisationTrue();
         setStatePseudoanonymisation(dbState);
-      } catch (error) {
-        toast.error(`Error: ${error}`, {
-          duration: 5000,
-        });
+      } catch (err) {
+        console.error("Failed to get pseudoanonymisation DB state", err);
+        toast.error(`Failed to get pseudoanonymisation DB state`);
       }
     }
     loadState();
   }, []);
 
   async function onClick() {
-    const nextState = !statePseudoanonymisation;
-    setStatePseudoanonymisation(nextState);
-    await setPseudoanonymisationInDb(nextState);
+    try {
+      const nextState = !statePseudoanonymisation;
+      setStatePseudoanonymisation(nextState);
+      await setPseudoanonymisationInDb(nextState);
 
-    if (statePseudoanonymisation) {
-      await deleteAllTokenFromDb();
+      if (statePseudoanonymisation) {
+        await deleteAllTokenFromDb();
+      }
+
+      toast.success(`Successfully turned ${nextState ? "on" : "off"}`);
+
+      toast.success(
+        ` ${nextState ? "Pseudoanonymisation will be applied to new tokens." : "Old decoy tokens will be wiped and some issues may occur with existing real tokens."}`,
+      );
+    } catch (err) {
+      console.error("Failed to update Pseudoanonymisation", err);
+      toast.error("Failed to update Pseudoanonymisation");
     }
-
-    toast.success(`Successfully turned ${nextState ? "on" : "off"}`, {
-      duration: 4000,
-    });
-
-    toast.success(
-      ` ${nextState ? "Pseudoanonymisation will be applied to new tokens." : "Old decoy tokens will be wiped and some issues may occur with existing real tokens."}`,
-      {
-        duration: 5000,
-      },
-    );
   }
 
   return (

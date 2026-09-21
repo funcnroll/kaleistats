@@ -21,71 +21,76 @@ export async function generateTokens(amount: number) {
 
   const isUsed = 0;
 
-  if (await isPseudoanonymisationTrue()) {
-    // Exponential decay
-    // Lower n of tokens correlates to higher risk of casual obseration, higher n of tokens correlates lower such risk ("safety in numbers")
+  try {
+    if (await isPseudoanonymisationTrue()) {
+      // Exponential decay
+      // Lower n of tokens correlates to higher risk of casual obseration, higher n of tokens correlates lower such risk ("safety in numbers")
 
-    // +1 ensures at least  i=amountTokens random dates
-    // amountTokens * amountDecoys||1 in a loop would be highly inefficient, so this is the best workaround.
-    const numDecoys =
-      Math.round(CEILING * Math.pow(Math.E, -lambda * amount)) + 1;
+      // +1 ensures at least  i=amountTokens random dates
+      // amountTokens * amountDecoys||1 in a loop would be highly inefficient, so this is the best workaround.
+      const numDecoys =
+        Math.round(CEILING * Math.pow(Math.E, -lambda * amount)) + 1;
 
-    const tokenExpireTimeArr = (await generateTokenExpireTime(
-      amount,
-      numDecoys,
-    )) as number[];
+      const tokenExpireTimeArr = (await generateTokenExpireTime(
+        amount,
+        numDecoys,
+      )) as number[];
 
-    for (let i = 0; i < numDecoys; i++) {
-      const isDecoy = 1;
+      for (let i = 0; i < numDecoys; i++) {
+        const isDecoy = 1;
 
-      const tokenUUID = self.crypto.randomUUID();
-      const expire = tokenExpireTimeArr[i];
-      const token = {
-        tokenUUID,
-        tokenStatus,
-        tokenExpireTime: expire,
-        fg_43F: isDecoy,
-        Alj_1f: isUsed,
-        Eka_9b: null,
-      };
-      tokens.push(token);
-    }
+        const tokenUUID = self.crypto.randomUUID();
+        const expire = tokenExpireTimeArr[i];
+        const token = {
+          tokenUUID,
+          tokenStatus,
+          tokenExpireTime: expire,
+          fg_43F: isDecoy,
+          Alj_1f: isUsed,
+          Eka_9b: null,
+        };
+        tokens.push(token);
+      }
 
-    for (let i = 0; i < amount; i++) {
+      for (let i = 0; i < amount; i++) {
+        const fg_43F = 0;
+        const tokenUUID = self.crypto.randomUUID();
+        const expire = tokenExpireTimeArr[i];
+        const token = {
+          tokenUUID,
+          tokenStatus,
+          tokenExpireTime: expire,
+          fg_43F,
+          Alj_1f: isUsed,
+          Eka_9b: null,
+        };
+        tokens.push(token);
+      }
+
+      const mixedTokens = shuffleArray(tokens);
+      console.log(mixedTokens);
+      return mixedTokens;
+    } else {
+      const tokenExpireTime = (await generateTokenExpireTime()) as number;
       const fg_43F = 0;
-      const tokenUUID = self.crypto.randomUUID();
-      const expire = tokenExpireTimeArr[i];
-      const token = {
-        tokenUUID,
-        tokenStatus,
-        tokenExpireTime: expire,
-        fg_43F,
-        Alj_1f: isUsed,
-        Eka_9b: null,
-      };
-      tokens.push(token);
+
+      for (let i = 0; i < amount; i++) {
+        const tokenUUID = self.crypto.randomUUID();
+        const token = {
+          tokenUUID,
+          tokenStatus,
+          tokenExpireTime,
+          fg_43F,
+          Alj_1f: isUsed,
+          Eka_9b: null,
+        };
+        tokens.push(token);
+      }
+
+      return tokens;
     }
-
-    const mixedTokens = shuffleArray(tokens);
-    console.log(mixedTokens);
-    return mixedTokens;
-  } else {
-    const tokenExpireTime = (await generateTokenExpireTime()) as number;
-    const fg_43F = 0;
-
-    for (let i = 0; i < amount; i++) {
-      const tokenUUID = self.crypto.randomUUID();
-      const token = {
-        tokenUUID,
-        tokenStatus,
-        tokenExpireTime,
-        fg_43F,
-        Alj_1f: isUsed,
-        Eka_9b: null,
-      };
-      tokens.push(token);
-    }
-
-    return tokens;
+  } catch (err) {
+    console.error("Failed to generate tokens", err);
+    throw new Error("Failed to generate tokens");
   }
 }
