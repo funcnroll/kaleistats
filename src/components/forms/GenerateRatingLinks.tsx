@@ -6,6 +6,7 @@ import { generateTokens } from "@/lib/generateTokens";
 import { insertTokensIntoDb } from "@/lib/insertTokensIntoDb";
 import { getAllTokens } from "@/lib/getAllTokens";
 import { isPseudoanonymisationTrue } from "@/lib/isPseudoanonymisationTrue";
+import { toast } from "react-hot-toast";
 
 function GenerateRatingLinks({
   setTokensGenerated,
@@ -37,6 +38,9 @@ function GenerateRatingLinks({
       );
       setTokensGenerated(true);
 
+      toast.success(`Successfully generated ${tokens.length} tokens`, {
+        duration: 4000,
+      });
       return;
     }
 
@@ -46,6 +50,9 @@ function GenerateRatingLinks({
       ),
     );
     setTokensGenerated(true);
+    toast.success(`Successfully generated ${tokens.length} tokens`, {
+      duration: 4000,
+    });
   }
 
   return (
