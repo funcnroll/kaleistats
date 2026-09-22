@@ -44,9 +44,14 @@ function TokenRow({
       <td>
         <Button
           onClick={async () => {
-            await setTokenStatusDb("inactive", uuid);
-            toast.success(`Successfully revoked token`, { duration: 4000 });
-            router.refresh();
+            try {
+              await setTokenStatusDb("inactive", uuid);
+              toast.success(`Successfully revoked token`);
+              router.refresh();
+            } catch (err) {
+              console.error("Failed to set token status", err);
+              toast.error("Failed to set token status");
+            }
           }}
         >
           Revoke

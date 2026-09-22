@@ -16,6 +16,7 @@ import { deleteTokenFromDb } from "@/lib/deleteTokenFromDb";
 import { getAllTokens } from "@/lib/getAllTokens";
 import { setTokenStatusDb } from "@/lib/setTokenStatusDb";
 import { processTokenMaintenance } from "@/lib/processTokenMaintenance";
+import { toast } from "react-hot-toast";
 
 function TokensPage({
   currentPage,
@@ -33,7 +34,12 @@ function TokensPage({
 
   useEffect(() => {
     async function runCleanup() {
-      await processTokenMaintenance();
+      try {
+        await processTokenMaintenance();
+      } catch (err) {
+        console.error("Failed to run token maintenance:", err);
+        toast.error("Failed to run token maintenance.");
+      }
     }
 
     runCleanup();
@@ -43,14 +49,22 @@ function TokensPage({
     let isMounted = true;
 
     async function syncTokens() {
-      if (!search) {
-        if (isMounted) setFilteredTokens(currentTokens);
-        return;
-      }
+      try {
+        if (!search) {
+          if (isMounted) setFilteredTokens(currentTokens);
+          return;
+        }
 
-      const results = await searchForTokenValue(selectedFilter, search);
-      if (isMounted) {
-        setFilteredTokens(results || []);
+        const results = await searchForTokenValue(selectedFilter, search);
+        if (isMounted) {
+          setFilteredTokens(results || []);
+        }
+      } catch (err) {
+        console.error("Failed to search tokens:", err);
+        toast.error("Failed to fetch search results");
+        if (isMounted) {
+          setFilteredTokens([]);
+        }
       }
     }
 

@@ -9,10 +9,15 @@ export async function setTokenUsed(tokenUUID: string) {
 
   // Side-channel attack in this context referring to the (previously mentioned) casual correlation upon user rating/token use, which could expose a user unintentionally.
 
-  const useExpireTime = generateTokenUsedTime();
+  try {
+    const useExpireTime = generateTokenUsedTime();
 
-  const stmt = db.prepare(
-    `UPDATE tokens SET Alj_1f = 1, Eka_9b = ? WHERE tokenUUID = ?`,
-  );
-  stmt.run(useExpireTime, tokenUUID);
+    const stmt = db.prepare(
+      `UPDATE tokens SET Alj_1f = 1, Eka_9b = ? WHERE tokenUUID = ?`,
+    );
+    stmt.run(useExpireTime, tokenUUID);
+  } catch (err) {
+    console.error(`Failed to set token as used for ${tokenUUID}`, err);
+    throw new Error("Failed to update token usage state.");
+  }
 }

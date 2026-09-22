@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import H1H2Spacing from "../layout/H1H2Spacing";
 import Button from "../ui/Button";
-import ErrMsg from "../ui/ErrMsg";
+
 import H1 from "../ui/H1";
 import RatingForm from "../forms/RatingForm";
 import { setTokenStatusDb } from "@/lib/setTokenStatusDb";
@@ -26,7 +26,6 @@ function RatingFormPage({ tokenUUID }: Props) {
   const [scores, setScores] = useState<number[]>(
     Array(configClient.traits.length).fill(null),
   );
-  const [errorMsg, setErrorMsg] = useState<string>("");
 
   if (!tokenUUID) return;
 
@@ -36,22 +35,21 @@ function RatingFormPage({ tokenUUID }: Props) {
 
   async function onSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
-    setErrorMsg("");
-    if (!tokenUUID) return;
-
-    if (scores.some((cur) => cur == null)) {
-      setErrorMsg("Please select a rating for every trait");
-      return;
-    }
-
-    const traitWithScore = scores.map((score, i) => {
-      return {
-        trait: configClient.traits[i],
-        score,
-      };
-    });
-
     try {
+      if (!tokenUUID) return;
+
+      if (scores.some((cur) => cur == null)) {
+        toast.error("Please select a rating for every trait");
+        return;
+      }
+
+      const traitWithScore = scores.map((score, i) => {
+        return {
+          trait: configClient.traits[i],
+          score,
+        };
+      });
+
       if (await isPseudoanonymisationTrue()) {
         await Promise.all([
           insertRatingIntoDb(traitWithScore),
@@ -66,7 +64,8 @@ function RatingFormPage({ tokenUUID }: Props) {
 
       router.push("/thankyou");
     } catch (err) {
-      toast.error(`Error: ${err}`, { duration: 5000 });
+      console.error(`Failed to rate ${err}`);
+      toast.error(`Failed to rate ${err}`);
     }
   }
 
@@ -89,7 +88,6 @@ function RatingFormPage({ tokenUUID }: Props) {
       </ul>
 
       <Button type="submit">Submit</Button>
-      {errorMsg && <ErrMsg>{errorMsg}</ErrMsg>}
     </form>
   );
 }

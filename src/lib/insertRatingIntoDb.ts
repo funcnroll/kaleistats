@@ -8,13 +8,18 @@ export async function insertRatingIntoDb(traitsWithScores: TraitRating[]) {
 
   // https://github.com/WiseLibs/better-sqlite3/blob/master/docs/api.md#transactionfunction---function
   // According to the docs, this is the most efficient way to mass write
-  const insert = db.prepare(
-    `INSERT INTO ratings (traitName, rating) VALUES (@trait, @score)`,
-  );
+  try {
+    const insert = db.prepare(
+      `INSERT INTO ratings (traitName, rating) VALUES (@trait, @score)`,
+    );
 
-  const insertMany = db.transaction((traitsWithScores) => {
-    for (const traitRating of traitsWithScores) insert.run(traitRating);
-  });
+    const insertMany = db.transaction((traitsWithScores) => {
+      for (const traitRating of traitsWithScores) insert.run(traitRating);
+    });
 
-  insertMany(traitsWithScores);
+    insertMany(traitsWithScores);
+  } catch (err) {
+    console.error("Failed to insert rating into DB", err);
+    throw new Error("Failed to insert rating into DB");
+  }
 }
