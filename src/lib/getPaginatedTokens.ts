@@ -19,6 +19,6 @@ export async function getPaginatedTokens(page: number) {
     return tokens;
   } catch (err) {
     console.error("Failed to get tokens for pagination", err);
-    console.error("Failed to get tokens for pagination");
+    throw new Error("Failed to get tokens for pagination");
   }
 }

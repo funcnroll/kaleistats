@@ -8,7 +8,7 @@ import TokenPageInput from "../ui/TokenPageInput";
 import TokenRow from "../ui/TokenRow";
 import { useEffect, useState } from "react";
 import { TokenObjectDb } from "@/types/TokenObjectDb";
-import { searchForTokenValue } from "@/lib/searchForTokenValue";
+import { searchForTokenValuePaginated } from "@/lib/searchForTokenValuePaginated";
 import { file } from "better-auth";
 import { getAllUsedTokens } from "@/lib/getAllUsedTokens";
 import { isPseudoanonymisationTrue } from "@/lib/isPseudoanonymisationTrue";
@@ -55,7 +55,11 @@ function TokensPage({
           return;
         }
 
-        const results = await searchForTokenValue(selectedFilter, search);
+        const results = await searchForTokenValuePaginated(
+          selectedFilter,
+          search,
+          currentPage,
+        );
         if (isMounted) {
           setFilteredTokens(results || []);
         }
