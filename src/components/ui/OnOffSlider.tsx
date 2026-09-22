@@ -2,7 +2,7 @@ function OnoffSlider({
   statePseudoanonymisation,
   onClick,
 }: {
-  statePseudoanonymisation: boolean;
+  statePseudoanonymisation: boolean | undefined;
   onClick: () => void;
 }) {
   // https://www.material-tailwind.com/docs/html/switch
