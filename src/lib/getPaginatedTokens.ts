@@ -1,11 +1,11 @@
 "use server";
 import db from "@/db/index";
 import { TokenObjectDb } from "@/types/TokenObjectDb";
-import { configServer } from "../../config/configServer";
+import { sharedConfig } from "../../config/sharedConfig";
 export async function getPaginatedTokens(page: number) {
   try {
     const lastValue =
-      page * configServer.tokensPerPage - configServer.tokensPerPage;
+      page * sharedConfig.tokensPerPage - sharedConfig.tokensPerPage;
 
     const stmt = db.prepare(
       `SELECT * FROM tokens WHERE id > ? ORDER BY id LIMIT ?`,
@@ -13,7 +13,7 @@ export async function getPaginatedTokens(page: number) {
 
     const tokens = stmt.all(
       lastValue,
-      configServer.tokensPerPage,
+      sharedConfig.tokensPerPage,
     ) as TokenObjectDb[];
 
     return tokens;

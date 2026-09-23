@@ -84,7 +84,10 @@ function TokensPage({
       <TokenPageInput />
       <div className="flex gap-4">
         <LastPaginationPageButton currentPage={currentPage} />
-        <NextPaginationPageButton currentPage={currentPage} />
+        <NextPaginationPageButton
+          currentPage={currentPage}
+          currentTokensLength={currentTokens.length}
+        />
         <NavButton path="/dashboard">Go back</NavButton>
         <SearchFilter
           setSelectedFilter={setSelectedFilter}
