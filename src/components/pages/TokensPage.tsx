@@ -86,7 +86,6 @@ function TokensPage({
         <LastPaginationPageButton currentPage={currentPage} />
         <NextPaginationPageButton currentPage={currentPage} />
         <NavButton path="/dashboard">Go back</NavButton>
-        {/* TODO: implement debounce */}
         <SearchFilter
           setSelectedFilter={setSelectedFilter}
           selectedFilter={selectedFilter}

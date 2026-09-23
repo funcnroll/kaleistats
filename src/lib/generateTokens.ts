@@ -55,7 +55,7 @@ export async function generateTokens(amount: number) {
       for (let i = 0; i < amount; i++) {
         const fg_43F = 0;
         const tokenUUID = self.crypto.randomUUID();
-        const expire = tokenExpireTimeArr[i];
+        const expire = tokenExpireTimeArr[numDecoys + i];
         const token = {
           tokenUUID,
           tokenStatus,
