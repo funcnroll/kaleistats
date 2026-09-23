@@ -10,8 +10,6 @@ import React, { useState } from "react";
 import { toast } from "react-hot-toast";
 
 function Page() {
-  //TODO: Prevent access if a session is already active
-
   const router = useRouter();
 
   const [password, setPassword] = useState<string>("");

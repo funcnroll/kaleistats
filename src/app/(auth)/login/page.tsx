@@ -8,8 +8,6 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 
 function Page() {
-  //TODO: Prevent access if a session is already active
-
   const router = useRouter();
 
   async function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {

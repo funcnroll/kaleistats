@@ -4,7 +4,6 @@ import Button from "../ui/Button";
 import Input from "../ui/Input";
 import { generateTokens } from "@/lib/generateTokens";
 import { insertTokensIntoDb } from "@/lib/insertTokensIntoDb";
-import { getAllTokens } from "@/lib/getAllTokens";
 import { isPseudoanonymisationTrue } from "@/lib/isPseudoanonymisationTrue";
 import { toast } from "react-hot-toast";
 

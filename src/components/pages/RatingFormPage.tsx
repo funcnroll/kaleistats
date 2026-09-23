@@ -1,19 +1,13 @@
 "use client";
 
 import { useState } from "react";
-
 import H1H2Spacing from "../layout/H1H2Spacing";
 import Button from "../ui/Button";
-
 import H1 from "../ui/H1";
 import RatingForm from "../forms/RatingForm";
-import { setTokenStatusDb } from "@/lib/setTokenStatusDb";
 import { useRouter } from "next/navigation";
-import { insertRatingIntoDb } from "@/lib/insertRatingIntoDb";
 import { configClient } from "../../../config/configClient";
 import { isPseudoanonymisationTrue } from "@/lib/isPseudoanonymisationTrue";
-import { deleteTokenFromDb } from "@/lib/deleteTokenFromDb";
-import { setTokenUsed } from "@/lib/setTokenUsed";
 import { toast } from "react-hot-toast";
 import { submitRating } from "@/lib/submitRating";
 

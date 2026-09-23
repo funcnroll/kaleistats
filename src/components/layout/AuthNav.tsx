@@ -1,6 +1,5 @@
 "use client";
 
-import { createAuthClient } from "better-auth/react";
 import { Spinner } from "../ui/Spinner";
 import SignOutButton from "../ui/SignOutButton";
 import Link from "next/link";
