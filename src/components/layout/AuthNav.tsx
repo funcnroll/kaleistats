@@ -2,8 +2,9 @@
 
 import { Spinner } from "../ui/Spinner";
 import SignOutButton from "../ui/SignOutButton";
-import Link from "next/link";
+
 import { useSession } from "@/lib/auth-client";
+import NavButton from "../ui/NavButton";
 
 function AuthNav() {
   const { data: session, isPending, error } = useSession();
@@ -16,13 +17,13 @@ function AuthNav() {
         <p className="text-sm text-red-500">{error.message}</p>
       ) : session ? (
         <>
-          <Link href="/dashboard">Dashboard</Link>
+          <NavButton path="/dashboard">Dashboard</NavButton>
           <SignOutButton />
         </>
       ) : (
         <>
-          <Link href="/login">Login</Link>
-          <Link href="/register">Register</Link>
+          <NavButton path="/login">Login</NavButton>
+          <NavButton path="/register">Register</NavButton>
         </>
       )}
     </nav>
