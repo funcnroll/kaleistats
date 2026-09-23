@@ -11,16 +11,16 @@ function Modal({ isOpen, onClose, children }: Props) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4"
       onClick={onClose}
     >
       <div
-        className="w-full max-w-md rounded-lg bg-neutral-700 p-6 shadow-xl"
+        className="relative w-full max-w-md max-h-[90vh] overflow-y-auto rounded-lg bg-neutral-700 p-4 pt-12 sm:p-6 sm:pt-12 shadow-xl"
         onClick={(e) => e.stopPropagation()}
       >
         <button
           onClick={onClose}
-          className="absolute  text-xl right-4 top-4 text-gray-500 hover:text-gray-700 cursor-pointer"
+          className="absolute right-2 top-2 p-2 text-xl leading-none text-gray-400 hover:text-gray-200 cursor-pointer"
           aria-label="Close modal"
         >
           X

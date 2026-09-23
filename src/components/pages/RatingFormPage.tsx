@@ -68,7 +68,10 @@ function RatingFormPage({ tokenUUID }: Props) {
   }
 
   return (
-    <form onSubmit={onSubmit} className="mb-8">
+    <form
+      onSubmit={onSubmit}
+      className="mb-8 w-full max-w-2xl mx-auto px-4 sm:px-6"
+    >
       <H1H2Spacing>
         <H1>What do you think of {configClient.adminName}?</H1>
         <h2>
@@ -77,7 +80,7 @@ function RatingFormPage({ tokenUUID }: Props) {
         </h2>
       </H1H2Spacing>
 
-      <ul className="space-y-4 mb-8">
+      <ul className="space-y-6 sm:space-y-4 mb-8">
         {configClient.traits.map((trait, i) => (
           <li key={i}>
             <RatingForm updateScore={updateScore} trait={trait} i={i} />
@@ -85,7 +88,9 @@ function RatingFormPage({ tokenUUID }: Props) {
         ))}
       </ul>
 
-      <Button type="submit">Submit</Button>
+      <Button type="submit" className="w-full ">
+        Submit
+      </Button>
     </form>
   );
 }
