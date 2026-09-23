@@ -7,7 +7,11 @@ async function Page(props: {
     page?: string;
   }>;
 }) {
-  const currentPage = Number((await props.searchParams)?.page || 1);
+  const searchParams = (await props.searchParams) ?? {};
+
+  const rawPage = Number(searchParams.page);
+  const currentPage =
+    Number.isFinite(rawPage) && rawPage >= 1 ? Math.trunc(rawPage) : 1;
   const currentTokens = await getPaginatedTokens(currentPage);
   const pseudoanonymisationValue = await isPseudoanonymisationTrue();
 
