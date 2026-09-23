@@ -62,7 +62,7 @@ function DashboardPage({ data }: { data: TraitRatingObjectDb[] }) {
         >
           {links.length} unique links have been generated.
           <Button
-            className="mt-4"
+            className="mt-4 "
             // Even with an X-hour deletion buffer, this whole setup
             // relies on the admin not actively keeping a mental spreadsheet of who
             // they handed tokens to. Scale and noise (decoys/UUIDs) usually stop casual
