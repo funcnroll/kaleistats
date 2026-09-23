@@ -7,10 +7,14 @@ function TokenPageInput() {
   const pathname = usePathname();
   const { replace } = useRouter();
 
-  function handlePage(page: string) {
+  function handlePage(value: string) {
+    if (!value) return;
+
+    const parsed = Math.trunc(Number(value));
+    if (!Number.isFinite(parsed) || parsed < 1) return;
+
     const params = new URLSearchParams(searchParams);
-    if (page) params.set("page", page);
-    if (!page) return;
+    params.set("page", parsed.toString());
 
     replace(`${pathname}?${params.toString()}`);
   }
@@ -18,6 +22,8 @@ function TokenPageInput() {
   return (
     <input
       type="number"
+      min={1}
+      step={1}
       placeholder="Input a page number"
       onChange={(e) => handlePage(e.target.value)}
       defaultValue={searchParams.get("page")?.toString()}

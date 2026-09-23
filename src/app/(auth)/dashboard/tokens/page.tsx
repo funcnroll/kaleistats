@@ -1,13 +1,4 @@
-import NavButton from "@/components/ui/NavButton";
-import NextPaginationPageButton from "@/components/ui/NextPaginationPageButton";
-import TokenPageInput from "@/components/ui/TokenPageInput";
-
-import TokenRow from "@/components/ui/TokenRow";
-
 import { getPaginatedTokens } from "@/lib/getPaginatedTokens";
-import { timestampToDate } from "@/lib/timestampToDate";
-import LastPaginationPageButton from "@/components/ui/LastPaginationPageButton";
-import SearchFilter from "@/components/ui/SearchFilter";
 import TokensPage from "@/components/pages/TokensPage";
 import { isPseudoanonymisationTrue } from "@/lib/isPseudoanonymisationTrue";
 

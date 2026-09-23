@@ -1,7 +1,6 @@
 "use client";
 
-import { TokenStatus } from "@/types/TokenStatus";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 
 function SearchFilter({
   setSearch,

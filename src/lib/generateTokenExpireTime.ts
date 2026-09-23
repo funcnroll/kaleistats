@@ -13,7 +13,7 @@ export async function generateTokenExpireTime(
       const expireTimes = [];
 
       // Scale the random expiration time pool relative to real vs. decoy volume
-      for (let i = 0; i < amountTokens * amountDecoys; i++) {
+      for (let i = 0; i < amountTokens + amountDecoys; i++) {
         const randomDate = generateRandomDate(startDate, endDate).getTime();
         expireTimes.push(randomDate);
       }

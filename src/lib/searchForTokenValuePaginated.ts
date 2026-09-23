@@ -1,7 +1,7 @@
 "use server";
 import db from "@/db/index";
 import { TokenObjectDb } from "@/types/TokenObjectDb";
-import { configServer } from "../../config/configServer";
+import { sharedConfig } from "../../config/sharedConfig";
 
 export async function searchForTokenValuePaginated(
   filter: string,
@@ -10,7 +10,7 @@ export async function searchForTokenValuePaginated(
 ) {
   try {
     const lastValue =
-      page * configServer.tokensPerPage - configServer.tokensPerPage;
+      page * sharedConfig.tokensPerPage - sharedConfig.tokensPerPage;
 
     if (filter === "uuid") {
       return db
@@ -19,7 +19,7 @@ export async function searchForTokenValuePaginated(
         )
         .all(
           `%${search}%`,
-          configServer.tokensPerPage,
+          sharedConfig.tokensPerPage,
           lastValue,
         ) as TokenObjectDb[];
     }
@@ -29,7 +29,7 @@ export async function searchForTokenValuePaginated(
         .prepare(
           `SELECT * FROM tokens WHERE status = ? ORDER BY id LIMIT ? OFFSET ?`,
         )
-        .all(search, configServer.tokensPerPage, lastValue) as TokenObjectDb[];
+        .all(search, sharedConfig.tokensPerPage, lastValue) as TokenObjectDb[];
     }
   } catch (err) {
     console.error(

@@ -1,20 +1,15 @@
 "use client";
 
 import { useState } from "react";
-
 import H1H2Spacing from "../layout/H1H2Spacing";
 import Button from "../ui/Button";
-
 import H1 from "../ui/H1";
 import RatingForm from "../forms/RatingForm";
-import { setTokenStatusDb } from "@/lib/setTokenStatusDb";
 import { useRouter } from "next/navigation";
-import { insertRatingIntoDb } from "@/lib/insertRatingIntoDb";
 import { configClient } from "../../../config/configClient";
 import { isPseudoanonymisationTrue } from "@/lib/isPseudoanonymisationTrue";
-import { deleteTokenFromDb } from "@/lib/deleteTokenFromDb";
-import { setTokenUsed } from "@/lib/setTokenUsed";
 import { toast } from "react-hot-toast";
+import { submitRating } from "@/lib/submitRating";
 
 type Props = {
   tokenUUID: string;
@@ -43,23 +38,26 @@ function RatingFormPage({ tokenUUID }: Props) {
         return;
       }
 
-      const traitWithScore = scores.map((score, i) => {
-        return {
-          trait: configClient.traits[i],
-          score,
-        };
-      });
+      const traitWithScore = scores.map((score, i) => ({
+        trait: configClient.traits[i],
+        score,
+      }));
 
-      if (await isPseudoanonymisationTrue()) {
-        await Promise.all([
-          insertRatingIntoDb(traitWithScore),
-          setTokenUsed(tokenUUID.toString()),
-        ]);
-      } else {
-        await Promise.all([
-          insertRatingIntoDb(traitWithScore),
-          setTokenStatusDb("inactive", tokenUUID.toString()),
-        ]);
+      const pseudo = await isPseudoanonymisationTrue();
+      const result = await submitRating(
+        traitWithScore,
+        tokenUUID.toString(),
+        pseudo,
+      );
+
+      if (!result.ok) {
+        if (result.reason === "already_used") {
+          toast.error("This link has already been used to submit a rating.");
+          router.push("/thankyou");
+          return;
+        }
+        toast.error("Failed to submit rating");
+        return;
       }
 
       router.push("/thankyou");

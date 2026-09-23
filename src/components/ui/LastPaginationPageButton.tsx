@@ -7,16 +7,22 @@ function LastPaginationPageButton({ currentPage }: { currentPage: number }) {
   const pathname = usePathname();
   const router = useRouter();
   const { replace } = router;
+
+  const isFirstPage = currentPage <= 1;
+
   function handleLastPage() {
-    console.log(currentPage);
+    if (isFirstPage) return;
 
     const newPage = currentPage - 1;
-
     replace(`${pathname}?page=${newPage.toString()}`);
     router.refresh();
   }
 
-  return <Button onClick={() => handleLastPage()}>Last page</Button>;
+  return (
+    <Button disabled={isFirstPage} onClick={() => handleLastPage()}>
+      Last page
+    </Button>
+  );
 }
 
 export default LastPaginationPageButton;

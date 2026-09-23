@@ -9,12 +9,6 @@ import TokenRow from "../ui/TokenRow";
 import { useEffect, useState } from "react";
 import { TokenObjectDb } from "@/types/TokenObjectDb";
 import { searchForTokenValuePaginated } from "@/lib/searchForTokenValuePaginated";
-import { file } from "better-auth";
-import { getAllUsedTokens } from "@/lib/getAllUsedTokens";
-import { isPseudoanonymisationTrue } from "@/lib/isPseudoanonymisationTrue";
-import { deleteTokenFromDb } from "@/lib/deleteTokenFromDb";
-import { getAllTokens } from "@/lib/getAllTokens";
-import { setTokenStatusDb } from "@/lib/setTokenStatusDb";
 import { processTokenMaintenance } from "@/lib/processTokenMaintenance";
 import { toast } from "react-hot-toast";
 
@@ -84,9 +78,11 @@ function TokensPage({
       <TokenPageInput />
       <div className="flex gap-4">
         <LastPaginationPageButton currentPage={currentPage} />
-        <NextPaginationPageButton currentPage={currentPage} />
+        <NextPaginationPageButton
+          currentPage={currentPage}
+          currentTokensLength={currentTokens.length}
+        />
         <NavButton path="/dashboard">Go back</NavButton>
-        {/* TODO: implement debounce */}
         <SearchFilter
           setSelectedFilter={setSelectedFilter}
           selectedFilter={selectedFilter}
