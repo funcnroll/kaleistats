@@ -1,6 +1,7 @@
 "use client";
 
 import { TraitRatingObjectDb } from "@/types/TraitRatingObjectDb";
+import { useEffect, useState } from "react";
 import {
   PolarAngleAxis,
   PolarGrid,
@@ -14,14 +15,34 @@ type Props = {
   data: TraitRatingObjectDb[];
 };
 
+function useIsSmall(breakpoint = 640) {
+  const [isSmall, setIsSmall] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia(`(max-width: ${breakpoint}px)`);
+    const update = () => setIsSmall(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, [breakpoint]);
+
+  return isSmall;
+}
+
 function StatsRadarChart({ data }: Props) {
+  const isSmall = useIsSmall();
+
   return (
-    <div className="w-[90vh] h-[75vh] p-4">
+    <div className="w-full max-w-3xl h-[55vh] sm:h-[70vh] p-2 sm:p-4">
       <ResponsiveContainer width="100%" height="100%">
         <RadarChart
           data={data}
-          outerRadius="90%"
-          margin={{ top: 40, right: 60, bottom: 40, left: 60 }}
+          outerRadius={isSmall ? "65%" : "90%"}
+          margin={
+            isSmall
+              ? { top: 20, right: 30, bottom: 20, left: 30 }
+              : { top: 40, right: 60, bottom: 40, left: 60 }
+          }
         >
           <PolarGrid stroke="#404040" />
           <PolarAngleAxis
@@ -29,7 +50,7 @@ function StatsRadarChart({ data }: Props) {
             tick={{
               // stone-200
               fill: "oklch(92.3% 0.003 48.717)",
-              fontSize: 18,
+              fontSize: isSmall ? 12 : 18,
               fontWeight: 600,
             }}
           />

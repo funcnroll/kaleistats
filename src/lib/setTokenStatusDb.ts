@@ -8,9 +8,7 @@ export async function setTokenStatusDb(
 ): Promise<void> {
   try {
     const stmt = db.prepare(`UPDATE tokens SET status = ? WHERE tokenUUID = ?`);
-    const run = stmt.run(status, tokenUUID);
-
-    console.log(run.changes);
+    stmt.run(status, tokenUUID);
   } catch (err) {
     console.error(`Failed to set token status for ${tokenUUID}`, err);
     throw new Error("Failed to update token status.");

@@ -30,7 +30,6 @@ function GenerateRatingLinks({
       if (await isPseudoanonymisationTrue()) {
         const realTokens = tokens.filter((token) => token.fg_43F == 0);
 
-        console.log(realTokens);
         setLinks(
           realTokens.map(
             (token) => `${window.location.origin}/rate/${token.tokenUUID}`,

@@ -68,7 +68,7 @@ export async function generateTokens(amount: number) {
       }
 
       const mixedTokens = shuffleArray(tokens);
-      console.log(mixedTokens);
+
       return mixedTokens;
     } else {
       const tokenExpireTime = (await generateTokenExpireTime()) as number;

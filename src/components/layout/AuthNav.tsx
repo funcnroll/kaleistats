@@ -15,7 +15,10 @@ function AuthNav() {
       ) : error ? (
         <p className="text-sm text-red-500">{error.message}</p>
       ) : session ? (
-        <SignOutButton />
+        <>
+          <Link href="/dashboard">Dashboard</Link>
+          <SignOutButton />
+        </>
       ) : (
         <>
           <Link href="/login">Login</Link>

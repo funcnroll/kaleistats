@@ -40,7 +40,7 @@ function DashboardPage({ data }: { data: TraitRatingObjectDb[] }) {
   }, [router]);
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center w-full px-4 sm:px-6 text-center">
       <H1H2Spacing>
         <H1>Hello {configClient.adminName}</H1>
         <h2>Here's how people see you, based on responses so far.</h2>
@@ -50,7 +50,7 @@ function DashboardPage({ data }: { data: TraitRatingObjectDb[] }) {
 
       <StatsRadarChart data={data} />
 
-      <div>
+      <div className=" flex flex-col items-center gap-4">
         <H1H2Spacing>
           <H1>Create Links</H1>
           <h2>Generate links here to send to people!</h2>
@@ -86,5 +86,4 @@ function DashboardPage({ data }: { data: TraitRatingObjectDb[] }) {
     </div>
   );
 }
-
 export default DashboardPage;
