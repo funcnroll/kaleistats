@@ -34,7 +34,7 @@ function TokenRow({
         <Button
           onClick={() => {
             navigator.clipboard.writeText(
-              `${window.location.hostname}/rate/${uuid}`,
+              `${window.location.origin}/rate/${uuid}`,
             );
           }}
         >

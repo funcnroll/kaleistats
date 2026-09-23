@@ -26,8 +26,8 @@ export async function generateTokens(amount: number) {
       // Exponential decay
       // Lower n of tokens correlates to higher risk of casual obseration, higher n of tokens correlates lower such risk ("safety in numbers")
 
-      // +1 ensures at least  i=amountTokens random dates
-      // amountTokens * amountDecoys||1 in a loop would be highly inefficient, so this is the best workaround.
+      // +1 guarantees at least one decoy even when the decay term rounds to 0,
+      // so the anonymity set is never just the real tokens
       const numDecoys =
         Math.round(CEILING * Math.pow(Math.E, -lambda * amount)) + 1;
 
