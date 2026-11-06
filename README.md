@@ -13,6 +13,8 @@
 
 Kaleistats is a Next.js full-stack web app designed to collect and visualise feedback on one's own character traits. It utilises token-based architecture.
 
+ **Kaleistats is not intended for a proper production environment.**
+
 ## Features
 
 - **Trait & Stats System**
