@@ -13,8 +13,17 @@
 
 Kaleistats is a Next.js full-stack web app designed to collect and visualise feedback on one's own character traits. It utilises token-based architecture.
 
- **Kaleistats is not intended for a proper production environment.**
+## Status
 
+Practice project, not intended for production use.
+
+Known limitations:
+- Sign-up is open, so anyone who can reach the app can create an account and see the dashboard.
+- Admin Server Actions don't check the session themselves; only the page routes are protected by the proxy.
+- Rating input (score range, trait names) is only validated in the browser.
+- Token expiry is only checked when the rating page loads, not at submission
+- submitRating trusts a client-supplied Pseudonymisation flag, so a modified request can reuse a link
+  
 ## Features
 
 - **Trait & Stats System**
@@ -28,18 +37,18 @@ Kaleistats is a Next.js full-stack web app designed to collect and visualise fee
 - **Authentication**
   - Login and registration functionality for dashboard access
 
-## Privacy & Pseudo-anonymisation
+## Privacy & Pseudoanonymisation
 
-The pseudo-anonymisation setting mitigates casual timing-based correlation, such as an admin attempting to link a submitted rating to a specific person by observing token usage or deletion timestamps. It relies on data flooding, delayed execution of various time-based events and simple database obfuscation
+The Pseudoanonymisation setting mitigates casual timing-based correlation, such as an admin attempting to link a submitted rating to a specific person by observing token usage or deletion timestamps. It relies on data flooding, delayed execution of various time-based events and simple database obfuscation
 
 - **Decoy Token Flooding**
   - When a batch of valid rating tokens is generated, the system simultaneously generates a pool of decoy tokens
 - **Token Shuffling**
   - Before the generated batch is finalised, real and decoy tokens are randomised using the Fisher-Yates algorithm (`src/lib/shuffleArray.ts`) to prevent identification based on sequential order
 - **Randomised Expiration**
-  - Tokens (real and decoy) are assigned a randomised, non-deterministic expiration timestamp (`tokenExpireTime`) 8 hours to 8 days in the future. This contrasts with the default deterministic expiration timestamp used when pseudo-anonymisation is off
+  - Tokens (real and decoy) are assigned a randomised, non-deterministic expiration timestamp (`tokenExpireTime`) 8 hours to 7 days and 8 hours in the future. This contrasts with the default deterministic expiration timestamp used when Pseudonymisation is off
 - **Decoupled & Randomised Deletion**
-  - Randomised deletion and expiration times prevent timing-based correlation. Upon rating submission, the system flags the token as used (`Alj_1f = 1`) and assigns it a randomised non-deterministic future deletion timestamp (`Eka_9b`) rather than executing an immediate deletion
+  - Randomised deletion and expiration times deter timing-based correlation. Upon rating submission, the system flags the token as used (`Alj_1f = 1`) and assigns it a randomised non-deterministic future deletion timestamp (`Eka_9b`) rather than executing an immediate deletion. A token therefore disappears either because it was used and reached its deletion time or because it expired unused, so its removal cannot reveal whether a rating occurred
 - **Database Obfuscation**
   - The SQLite database uses non-descriptive column names (`fg_43F`, `Alj_1f`, `Eka_9b`) to obscure data during casual database browsing
 
@@ -75,13 +84,18 @@ $$\text{numDecoys} = \text{round}\left(300 \cdot e^{-\left(\frac{\ln(2)}{10}\rig
 ![Geogebra scatter chart token expire and deletion time](img/geogebra2.png)
 
 - **Timeline Overlap**
-  - Blue points mark real token deletions (upon rating). Red points mark decoy expirations, both of which are assigned randomised timestamps drawn from the same window (by default, 8 hours to 8 days after the event). Real token expirations are omitted here for readability
+  - Blue points mark real token deletions (upon rating), red points mark decoy expirations. Each is drawn uniformly at random within its own window (8 hours to 7 days and 8 hours after its starting event) (From 0% to 100%). The windows start at different events by design (rating vs. batch generation). Real token expirations are omitted for readability.
+  - Because a vanishing token may have been used (and hit its randomised deletion time) or simply expired unused, deletion timing alone cannot reveal whether a rating occurred.
 
 ## Practical Demonstration
 
 ![Practical demonstration of decoy generation with n=5 real tokens](img/practical1.gif)
 
+Generating a batch of 5 real links. With the default constants, 213 decoy tokens are created alongside them (218 in total) and shuffled into one list. In the web UI, real and decoy tokens look identical. In the database, the decoy flag sits in a non-descriptive column (`fg_43F`) and the rows are shuffled, so casual browsing reveals nothing. A direct SQL query would.
+
 ![Practical demonstration of flagging as marked after rating](img/practical2.gif)
+
+Submitting a rating. The token isn't deleted immediately. It is flagged as used (`Alj_1f = 1`) and given a random future deletion time (`Eka_9b`), so nothing visibly disappears at the moment of submission
 
 ## Tech Stack
 
