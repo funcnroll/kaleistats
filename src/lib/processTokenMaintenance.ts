@@ -16,15 +16,16 @@ export async function processTokenMaintenance() {
         `,
       ).run(now);
     } else {
-      //otherwise, delete all tokens if they are marked as used and their marked time for deletion has passed
+      // otherise, delete tokens whose random deletion time has passed
+      // and unused tokens (real and decoy) whose expiry time has passed
+      // a vanishing token is therefore either used or expired
       db.prepare(
         `
         DELETE FROM tokens
-        WHERE Alj_1f = 1
-        AND Eka_9b IS NOT NULL
-        AND Eka_9b < ?
+        WHERE (Alj_1f = 1 AND Eka_9b IS NOT NULL AND Eka_9b < ?)
+           OR (Alj_1f = 0 AND expireTime < ?)
         `,
-      ).run(now);
+      ).run(now, now);
     }
   } catch (err) {
     console.error("Couldn't execute token maintenance", err);
